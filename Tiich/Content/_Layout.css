@@ -1,0 +1,40 @@
+﻿html
+{
+    height:100%;
+}
+
+body
+{
+    margin:0;
+    height:100%;
+}
+
+div.content 
+{
+    background-color:#ff9800;
+    height:100%;
+    margin:0;
+}
+
+div.navbar
+{
+    margin:0;
+    margin-bottom:-21px;
+    height:75px;
+    display:inline-block;
+    border: solid black 1px;
+    width:100%;
+
+    font-family:"Content/RobotoTTF/"
+}
+
+div.navbar ul
+{
+    display: inline-block;
+}
+
+div.navbar ul li
+{
+    display: inline-block;
+}
+

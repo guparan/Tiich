@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Tiich";
+}
+
+<h1>Image </h1>
+
+<div class="homeSearch">
+    @using (Html.BeginForm("classicSearch", "Search", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.TextBox("research")
+        <input type="submit" name="runSimulation" value="Go !" />
+    }
+   
+    @Html.ActionLink("Recherche magique", "magicSearch")
+</div>
