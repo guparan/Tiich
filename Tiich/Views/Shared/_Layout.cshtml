@@ -2,44 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8" />
-
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,800,400' rel='stylesheet' type='text/css'>
-
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-
-
+    @Styles.Render("~/Content/Bootstrap/css/bootstrap.min.css")
+        
     @Styles.Render("~/Content/_Layout.css")
     @Styles.Render("~/Content/navbar.css")
-
+    
+    
 </head>
 <body>
-    <div class="navbar">
-        <ul >
-            <li class="left">
-                <ul>
-                    <li>Logo</li>
-                </ul>
-            </li>
-            <li class="middle">
-                <ul>
-                    <li>@Html.ActionLink("Rechercher", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Proposer", "Index", "Workshop")</li>
-                    <li>@Html.ActionLink("A propos", "Index", "About")</li>
+    @Html.Partial("Navbar")
 
-                </ul>
-            </li>
-            <li class="right">
-                <ul>
-                    <li>@Html.ActionLink("Connecter", "Index", "User")</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-    <div class="content">
-        @RenderBody()
-    </div>    
+    @RenderBody()
     
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)

@@ -1,19 +1,15 @@
-﻿html
+﻿body
 {
-    height:100%;
+    background-color:#FFA726;
 }
 
-body
+div.jumbotron
 {
-    margin:0;
-    height:100%;
-}
-
-div.content 
-{
-    background-color:#e0e0e0;
-    height:100%;
-    margin:0;
     padding:5%;
+    background-color: rgba(255, 255, 255, 0.7); /* un arrière plan bleu à 50% de transparence */
 }
 
+.fullSize
+{
+    width:100%;
+}
