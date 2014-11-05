@@ -1,0 +1,29 @@
+﻿@model TiichDAL.User
+
+@using (Html.BeginForm("SignIn", "User", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
+{
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+        <div class="col-sm-7">
+            @Html.TextBox("email", Model.Email, new { @class = "form-control", @placeholder = "Email" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">Mot de passe</label>
+        <div class="col-sm-7">
+            @Html.TextBox("password", Model.Password, new { @class = "form-control", @placeholder = "Mot de passe", @type = "password" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">Répéter</label>
+        <div class="col-sm-7">
+            @Html.TextBox("password2", "", new { @class = "form-control", @placeholder = "Répéter", type="password" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-10">
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+        </div>
+    </div>
+}

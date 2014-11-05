@@ -255,6 +255,9 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\Navbar.cshtml" />
+    <Content Include="Views\User\LogIn.cshtml" />
+    <Content Include="Views\User\SignIn.cshtml" />
+    <Content Include="Views\Shared\Errors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -263,6 +266,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiController\ApiController.csproj">
+      <Project>{5ffd685b-0f6d-479d-9256-6e5eed1a8055}</Project>
+      <Name>ApiController</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TiichDAL\TiichDAL.csproj">
+      <Project>{717216bd-9925-4ba6-9a95-780f16f79935}</Project>
+      <Name>TiichDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TiichService\TiichService.csproj">
+      <Project>{4a20af13-a5e1-4be9-b2cb-b2f81b8764ed}</Project>
+      <Name>TiichService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{6593fa8c-d1d7-4bd0-9bad-bea0399ff000}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

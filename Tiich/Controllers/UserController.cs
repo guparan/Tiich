@@ -3,17 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TiichDAL;
+using Utils;
+using TiichService.Interface;
+using TiichService.Service;
 
 namespace Tiich.Controllers
 {
     public class UserController : Controller
     {
+        [HttpPost]
+        public ActionResult SignIn(User user)
+        {
+            ErrorHandler eh = new ErrorHandler();
+            IService<User> service = new ServiceUser();
+            
+            service.Add(user, eh);
+
+            TempData["errors"] = eh.getErrors();
+            return View("Index", user);
+        }
+
         //
         // GET: /User/
 
         public ActionResult Index()
         {
-            return View();
+            return View(new User());
         }
 
         //

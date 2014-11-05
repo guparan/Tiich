@@ -6,75 +6,11 @@
 
     <div class="col-md-5 well">
         <h1>Déjà membre ?</h1>
-
-        @using (Html.BeginForm("login", "User", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
-        {
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
-                <div class="col-sm-7">
-                    @Html.TextBox("login","", new {@class="form-control", @placeholder="Email/Pseudo"})
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Mot de passe</label>
-                <div class="col-sm-7">
-                    @Html.TextBox("password", "", new { @class = "form-control", @placeholder = "Mot de passe", @type="password"})
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-7">
-                  <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("rememberMe", false, new { @class=""})
-                        Se souvenir de moi
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-7">
-                  <button type="submit" class="btn btn-success">Se Connecter</button>
-                </div>
-              </div>
-        }
+        @Html.Partial("LogIn")
     </div>
 
     <div class="col-md-5 col-md-offset-1 well">
         <h1>Inscris-toi !</h1>
-        @using (Html.BeginForm("singIn", "User", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
-        {
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
-                <div class="col-sm-7">
-                    @Html.TextBox("email", "", new { @class = "form-control", @placeholder = "Email" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Pseudo</label>
-                <div class="col-sm-7">
-                    @Html.TextBox("login", "", new { @class = "form-control", @placeholder = "Pseudo", @type = "password" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Mot de passe</label>
-                <div class="col-sm-7">
-                    @Html.TextBox("password", "", new { @class = "form-control", @placeholder = "Mot de passe", @type = "password" })
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Répéter</label>
-                <div class="col-sm-7">
-                    @Html.TextBox("password2", "", new { @class = "form-control", @placeholder = "Répéter" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-10">
-                    <button type="submit" class="btn btn-primary">S'inscrire</button>
-                </div>
-            </div>
-        }
-
+        @Html.Partial("SignIn")
     </div>
-
 </div>

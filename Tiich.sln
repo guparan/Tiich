@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiichService", "TiichServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{6593FA8C-D1D7-4BD0-9BAD-BEA0399FF000}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiController", "ApiController\ApiController.csproj", "{5FFD685B-0F6D-479D-9256-6E5EED1A8055}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6593FA8C-D1D7-4BD0-9BAD-BEA0399FF000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6593FA8C-D1D7-4BD0-9BAD-BEA0399FF000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6593FA8C-D1D7-4BD0-9BAD-BEA0399FF000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FFD685B-0F6D-479D-9256-6E5EED1A8055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FFD685B-0F6D-479D-9256-6E5EED1A8055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FFD685B-0F6D-479D-9256-6E5EED1A8055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FFD685B-0F6D-479D-9256-6E5EED1A8055}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
