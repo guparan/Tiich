@@ -1,0 +1,14 @@
+﻿@if (TempData["success"] != null)
+{
+    if (!String.IsNullOrEmpty(TempData["success"].ToString()))
+    {
+        <div>
+            <div class="col-lg-offset-1 col-lg-10">
+
+                <div class="alert alert-success">
+                    @TempData["success"]
+                </div>
+            </div>
+        </div>
+    }
+}

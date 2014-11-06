@@ -10,7 +10,23 @@
                 <li>@Html.ActionLink("A propos", "Index", "About")</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("Connecter", "Index", "User")</li>
+                @if(User.Identity.IsAuthenticated)
+                {
+                    <li class="logOutButton">
+                        <a href="/User/LogOut" class="">
+                            <span class="glyphicon glyphicon-off " style="color: black;"></span>
+                        </a>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="logInButton">
+                        <a href="/User/Index" class=" ">
+                            <span class="glyphicon glyphicon-off " style="color: black;"></span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </div>

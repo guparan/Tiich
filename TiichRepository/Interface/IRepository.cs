@@ -7,11 +7,11 @@ using Utils;
 
 namespace TiichRepository.Interface
 {
-    public interface IRepository
+    public interface IRepository<T>
     {
-        void Add(object obj, ErrorHandler eh);
-        void Edit(object obj, ErrorHandler eh);
+        void Add(T obj, ErrorHandler eh);
+        void Edit(T obj, ErrorHandler eh);
         void Delete(int id, ErrorHandler eh);
-        void GenericTests(object obj, ErrorHandler eh);
+        void GenericTests(T obj, ErrorHandler eh);
     }
 }

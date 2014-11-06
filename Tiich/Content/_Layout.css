@@ -13,3 +13,12 @@ div.jumbotron
 {
     width:100%;
 }
+
+li.LogInButton{
+    background-color:green;
+}
+
+
+li.LogOutButton{
+    background-color:red;
+}

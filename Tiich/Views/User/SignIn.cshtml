@@ -21,6 +21,17 @@
             @Html.TextBox("password2", "", new { @class = "form-control", @placeholder = "Répéter", type="password" })
         </div>
     </div>
+    
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-7">
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBox("rememberMe2", false, new { @class = "" })
+                    Se souvenir de moi
+                </label>
+            </div>
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-10">
             <button type="submit" class="btn btn-primary">S'inscrire</button>

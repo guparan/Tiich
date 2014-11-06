@@ -5,15 +5,11 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TiichModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Erreurs détectées durant la génération :
-avertissement 6002: La table/vue 'Tiich.dbo.User' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Password" />
-            <PropertyRef Name="Email" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="Bio" Type="text" />
@@ -24,19 +20,7 @@ avertissement 6002: La table/vue 'Tiich.dbo.User' n'a pas de clé primaire défi
           <Property Name="LastName" Type="nchar" MaxLength="30" />
         </EntityType>
         <EntityContainer Name="TiichModelStoreContainer">
-          <EntitySet Name="User" EntityType="Self.User" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [User].[Id] AS [Id], 
-    [User].[Password] AS [Password], 
-    [User].[Email] AS [Email], 
-    [User].[Bio] AS [Bio], 
-    [User].[Phone] AS [Phone], 
-    [User].[Avatar] AS [Avatar], 
-    [User].[Birthday] AS [Birthday], 
-    [User].[FirstName] AS [FirstName], 
-    [User].[LastName] AS [LastName]
-    FROM [dbo].[User] AS [User]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -48,8 +32,6 @@ avertissement 6002: La table/vue 'Tiich.dbo.User' n'a pas de clé primaire défi
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Password" />
-            <PropertyRef Name="Email" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />

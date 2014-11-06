@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiich", "Tiich\Tiich.csproj", "{33A3CE11-AE87-4BEA-896E-9F4D3CA97310}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C87F0380-79F0-4131-B7D7-973C2A33778D} = {C87F0380-79F0-4131-B7D7-973C2A33778D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiichDAL", "TiichDAL\TiichDAL.csproj", "{717216BD-9925-4BA6-9A95-780F16F79935}"
 EndProject
@@ -14,6 +17,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{6593FA8C-D1D7-4BD0-9BAD-BEA0399FF000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiController", "ApiController\ApiController.csproj", "{5FFD685B-0F6D-479D-9256-6E5EED1A8055}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0DD7F094-F8DA-42E6-B145-DCB20F5F2A84}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,15 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiichDAL;
 using TiichRepository.Interface;
+using System.Security.Cryptography;
+using Utils;
 
 namespace TiichRepository.Repository
 {
-    class UserRepository : GenericRepository
+    public class UserRepository : GenericRepository<User>
     {
-        public void GenericTests(object obj, Utils.ErrorHandler eh)
+        public override void Add(User user, Utils.ErrorHandler eh)
         {
-            //Email unique 
+            user.Password = Crypter.EncryptPassword(user.Password);
+            base.Add(user, eh);
+        }
+
+        public override void GenericTests(User user, ErrorHandler eh)
+        {
+            using (TiichEntities context = new TiichEntities())
+            {
+                //Email unique
+                User old = context.User.Where(u => u.Email.Equals(user.Email)).FirstOrDefault();
+                if(old != null)
+                {
+                    eh.addError("Email déjà présent dans la base de donnée");
+                }
+            }
         }
     }
 }
