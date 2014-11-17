@@ -30,8 +30,10 @@ namespace TiichDAL
         public Nullable<double> PriceMax { get; set; }
         public string Recurence { get; set; }
         public System.DateTime CreationDate { get; set; }
-        public int UserID { get; set; }
+        public string Equipement { get; set; }
+        public Nullable<int> UserID { get; set; }
     
+        public virtual User User { get; set; }
         public virtual ICollection<Tag> Tag { get; set; }
     }
 }

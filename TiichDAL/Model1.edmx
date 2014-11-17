@@ -35,9 +35,8 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
         </EntityType>
         <EntityType Name="User">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="Bio" Type="text" />
@@ -46,6 +45,7 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <Property Name="Birthday" Type="date" />
           <Property Name="FirstName" Type="nchar" MaxLength="30" />
           <Property Name="LastName" Type="nchar" MaxLength="30" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Workshop">
           <Key>
@@ -62,7 +62,8 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <Property Name="PriceMax" Type="float" />
           <Property Name="Recurence" Type="nchar" MaxLength="50" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Equipement" Type="text" />
+          <Property Name="UserID" Type="int" />
         </EntityType>
         <Association Name="FK_Tag_Workshop_Tag">
           <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
@@ -88,6 +89,18 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Workshop_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Workshop">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TiichModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
@@ -107,6 +120,10 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
             <End Role="Workshop" EntitySet="Workshop" />
             <End Role="Tag_Workshop" EntitySet="Tag_Workshop" />
           </AssociationSet>
+          <AssociationSet Name="FK_Workshop_User" Association="Self.FK_Workshop_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Workshop" EntitySet="Workshop" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -117,6 +134,10 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <EntitySet Name="Tag" EntityType="TiichModel.Tag" />
           <EntitySet Name="User" EntityType="TiichModel.User" />
           <EntitySet Name="Workshop" EntityType="TiichModel.Workshop" />
+          <AssociationSet Name="FK_Workshop_User" Association="TiichModel.FK_Workshop_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Workshop" EntitySet="Workshop" />
+          </AssociationSet>
           <AssociationSet Name="Tag_Workshop" Association="TiichModel.Tag_Workshop">
             <End Role="Tag" EntitySet="Tag" />
             <End Role="Workshop" EntitySet="Workshop" />
@@ -143,9 +164,9 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
         </EntityType>
         <EntityType Name="User">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="Bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -154,6 +175,7 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <Property Name="Birthday" Type="DateTime" Precision="0" />
           <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Workshop" Relationship="TiichModel.FK_Workshop_User" FromRole="User" ToRole="Workshop" />
         </EntityType>
         <EntityType Name="Workshop">
           <Key>
@@ -170,9 +192,23 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <Property Name="PriceMax" Type="Double" />
           <Property Name="Recurence" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Equipement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="TiichModel.FK_Workshop_User" FromRole="Workshop" ToRole="User" />
           <NavigationProperty Name="Tag" Relationship="TiichModel.Tag_Workshop" FromRole="Workshop" ToRole="Tag" />
         </EntityType>
+        <Association Name="FK_Workshop_User">
+          <End Type="TiichModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="TiichModel.Workshop" Role="Workshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Workshop">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Tag_Workshop">
           <End Type="TiichModel.Tag" Role="Tag" Multiplicity="*" />
           <End Type="TiichModel.Workshop" Role="Workshop" Multiplicity="*" />
@@ -214,7 +250,7 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
                 <ScalarProperty Name="Bio" ColumnName="Bio" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -222,6 +258,7 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
             <EntityTypeMapping TypeName="TiichModel.Workshop">
               <MappingFragment StoreEntitySet="Workshop">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Equipement" ColumnName="Equipement" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Recurence" ColumnName="Recurence" />
                 <ScalarProperty Name="PriceMax" ColumnName="PriceMax" />

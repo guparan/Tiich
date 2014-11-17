@@ -7,8 +7,9 @@
       <Diagram DiagramId="c079e1bd416143488789a8da42a18655" Name="Diagram1">
         <EntityTypeShape EntityType="TiichModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="TiichModel.Tag" Width="1.5" PointX="0.75" PointY="1.875" />
-        <EntityTypeShape EntityType="TiichModel.User" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="TiichModel.Workshop" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="TiichModel.User" Width="1.5" PointX="5.75" PointY="3.375" />
+        <EntityTypeShape EntityType="TiichModel.Workshop" Width="1.5" PointX="3.125" PointY="1.5" />
+        <AssociationConnector Association="TiichModel.FK_Workshop_User" />
         <AssociationConnector Association="TiichModel.Tag_Workshop" />
       </Diagram>
     </edmx:Diagrams>
