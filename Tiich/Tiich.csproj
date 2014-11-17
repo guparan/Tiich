@@ -206,6 +206,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\WYSIWYG.css" />
     <Content Include="Content\_Layout.css" />
     <Content Include="Global.asax" />
     <Compile Include="Content\Fonts\RobotoTTF\Roboto-Black.ttf" />
@@ -261,7 +262,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Workshop\Index.cshtml" />
+    <Content Include="Views\Workshop\Create.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\Navbar.cshtml" />

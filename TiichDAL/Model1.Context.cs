@@ -25,6 +25,9 @@ namespace TiichDAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Tag> Tag { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Workshop> Workshop { get; set; }
     }
 }

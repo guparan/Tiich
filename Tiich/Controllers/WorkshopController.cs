@@ -3,17 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TiichDAL;
 
 namespace Tiich.Controllers
 {
     public class WorkshopController : Controller
     {
-        //
-        // GET: /Workshop/
-
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Create(int id = -1)
         {
-            return View();
+            Workshop ws = new Workshop();
+            
+            if(id != -1)
+            {
+
+            }
+
+            return View(ws);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Workshop ws)
+        {
+            //Workshop ws = new Workshop();
+
+            //if (id != -1)
+            /*{
+
+            }*/
+
+            return View(ws);
         }
 
         //
