@@ -1,36 +1,15 @@
-﻿function DefaultPlacement(map) {
-    var x = 50;
-    var y = 50;
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function (pos) {
+﻿var coords;
 
-                //center
-                x = pos.coords.latitude;
-                y = pos.coords.longitude;
-                var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-                mapOptions = {
-                    center: { lat: x, lng: y },
-                    zoom: 17
-                };
+function DefaultPlacement() {
+    var res = 
 
-                //Place
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(x, y),
-                    map: map,
-                    title: 'Vous êtes ici'
-                });
-            }
-            );
-    }
-    else {
-        alert("Pas de géoloc");
-    }
+    alert("ok2");
+    alert(res);
+    return res;
 }
 
 function SearchBox(map)
 {
-
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */(
         document.getElementById('location'));
@@ -52,17 +31,18 @@ function SearchBox(map)
 
 }
 
+function GetLocation(location) {
+    //alert(location.coords.latitude);
+    //alert(location.coords.longitude);
+    //alert(location.coords.accuracy);
+    coords = location.coords;
+    //alert(coords);
+}
+
 function initialize() {
-    /*var mapOptions = {
-                    center: { lat: 0, lng: 0 },
-                    zoom: 17
-                };
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    DefaultPlacement(map);
-    SearchBox(map);*/
-
-
+    navigator.geolocation.getCurrentPosition(GetLocation);
+    //alert(coords);
     var markers = [];
     var map = new google.maps.Map(document.getElementById('map'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -75,7 +55,7 @@ function initialize() {
 
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */(
-        document.getElementById('location'));
+        document.getElementById('address'));
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     var searchBox = new google.maps.places.SearchBox(

@@ -64,6 +64,8 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="Equipement" Type="text" />
           <Property Name="UserID" Type="int" />
+          <Property Name="Address" Type="text" />
+          <Property Name="Details" Type="text" />
         </EntityType>
         <Association Name="FK_Tag_Workshop_Tag">
           <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
@@ -196,6 +198,8 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <Property Name="UserID" Type="Int32" />
           <NavigationProperty Name="User" Relationship="TiichModel.FK_Workshop_User" FromRole="Workshop" ToRole="User" />
           <NavigationProperty Name="Tag" Relationship="TiichModel.Tag_Workshop" FromRole="Workshop" ToRole="Tag" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Workshop_User">
           <End Type="TiichModel.User" Role="User" Multiplicity="0..1" />
@@ -257,6 +261,8 @@ avertissement 6002: La table/vue 'Tiich.dbo.Tag_Workshop' n'a pas de clé primai
           <EntitySetMapping Name="Workshop">
             <EntityTypeMapping TypeName="TiichModel.Workshop">
               <MappingFragment StoreEntitySet="Workshop">
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Equipement" ColumnName="Equipement" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />

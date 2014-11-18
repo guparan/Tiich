@@ -32,6 +32,8 @@ namespace TiichDAL
         public System.DateTime CreationDate { get; set; }
         public string Equipement { get; set; }
         public Nullable<int> UserID { get; set; }
+        public string Address { get; set; }
+        public string Details { get; set; }
     
         public virtual User User { get; set; }
         public virtual ICollection<Tag> Tag { get; set; }
