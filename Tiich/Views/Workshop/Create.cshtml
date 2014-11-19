@@ -4,16 +4,17 @@
     ViewBag.Title = "Proposer";
 }
 
-
-<div class="col-lg-10 col-lg-offset-1">
-    <div class="well">
-        <h1 >
-            @Html.TextBox("Label", Model.Label, new { @class = "form-control", @placeholder = "Votre titre ici" })
-        </h1>
+@using (Html.BeginForm("Create", "Workshop", FormMethod.Post))
+{
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="well">
+            <h1 >
+                @Html.TextBox("Label", Model.Label, new { @class = "form-control", @placeholder = "Votre titre ici" })
+            </h1>
+        </div>
     </div>
-</div>
-<!-- Content-->
-<div class="col-lg-10 col-lg-offset-1">
+    <!-- Content-->
+    <div class="col-lg-10 col-lg-offset-1">
     <div class="col-lg-8">
         <div class="well col-lg-12" style="height:100%;">
             <div class="col-lg-6">
@@ -73,6 +74,6 @@
         </div>
     </div>
 </div>
-
+}
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 <script src="~/Scripts/Gmap.js"></script>

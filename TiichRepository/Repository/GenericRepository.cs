@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 using TiichDAL;
 using TiichRepository.Interface;
 using Utils;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace TiichRepository.Repository
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        virtual public void Add(T obj, Utils.ErrorHandler eh)
+        private string _namespace = "TiichDAL.";
+
+        virtual public void Add(T obj, Utils.ErrorHandler eh, List<object> toAttach = null)
         {
             using (TiichEntities context = new TiichEntities())
             {
@@ -19,7 +23,15 @@ namespace TiichRepository.Repository
 
                 if(!eh.hasErrors())
                 {
-                    context.Set<T>().Add(obj);
+                    DbSet dbSet = context.Set<T>();
+                    if(toAttach != null)
+                        foreach (var item in toAttach)
+                        {
+                            var x = item;
+                            dbSet.Attach(item.GetType());
+                        }
+                    
+                    dbSet.Add(obj);
                     context.SaveChanges();
                 }
             }

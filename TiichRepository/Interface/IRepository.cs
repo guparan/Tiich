@@ -9,7 +9,7 @@ namespace TiichRepository.Interface
 {
     public interface IRepository<T>
     {
-        void Add(T obj, ErrorHandler eh);
+        void Add(T obj, ErrorHandler eh, List<object> toAttach = null);
         void Edit(T obj, ErrorHandler eh);
         void Delete(int id, ErrorHandler eh);
         void GenericTests(T obj, ErrorHandler eh);

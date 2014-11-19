@@ -10,16 +10,16 @@ using Utils;
 
 namespace TiichService.Service
 {
-    public class ServiceGeneric<T> : IService<T> where T :class
+    public class GenericService<T> : IService<T> where T :class
     {
         protected GenericRepository<T> _repo;
 
-        public void Add(T obj, ErrorHandler eh)
+        public void Add(T obj, ErrorHandler eh, List<object> toAttach = null)
         {
             GenericTests(obj, eh);
 
             if (!eh.hasErrors())
-                _repo.Add(obj,eh);
+                _repo.Add(obj,eh, toAttach);
         }
 
         public void Edit(T obj, ErrorHandler eh)

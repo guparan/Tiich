@@ -12,7 +12,7 @@ namespace TiichRepository.Repository
 {
     public class UserRepository : GenericRepository<User>
     {
-        public override void Add(User user, Utils.ErrorHandler eh)
+        public override void Add(User user, Utils.ErrorHandler eh, List<object> toAttach = null)
         {
             user.Password = Crypter.EncryptPassword(user.Password);
             base.Add(user, eh);
@@ -28,6 +28,15 @@ namespace TiichRepository.Repository
                 {
                     eh.addError("Email déjà présent dans la base de donnée");
                 }
+            }
+        }
+
+        public User GetUserByName(string p)
+        {
+            using (TiichEntities context = new TiichEntities())
+            {
+                User user = context.User.Where(u => u.Email.Equals(p)).FirstOrDefault();
+                return user;
             }
         }
     }

@@ -140,6 +140,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\VMSearchResultDisplay.cs" />
+    <Compile Include="ViewModels\VMWorkshop.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bootstrap\css\bootstrap-theme.css" />

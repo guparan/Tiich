@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Tiich.ViewModels.VMSearchResultDisplay
+
+@{
     ViewBag.Title = "Tiich";
 }
 
@@ -19,5 +21,34 @@
                 </div>
             </div>
         }
+
     </div>
 </div>
+<div class="col-md-8 col-md-offset-2">
+    
+    @{
+        if(Model.VMWorshops != null)
+        {
+            foreach(var vmws in Model.VMWorshops)
+            {
+                <h2>@vmws.Category</h2>
+            
+                if(vmws.Workshops != null)
+                {
+                    foreach(var ws in vmws.Workshops)
+                    {
+                        <div class="well">
+                            <h3>@ws.Label</h3>
+                            <p>@ws.Details</p>
+                            <p>@ws.Address</p>
+                            <p>@ws.CreationDate</p>
+                        </div>
+                    }    
+                }
+            }    
+        }
+        
+    }
+
+</div>
+

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tiich.ViewModels;
+using TiichDAL;
+using TiichService.Service;
 
 namespace Tiich.Controllers
 {
@@ -13,7 +16,19 @@ namespace Tiich.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            WorkshopService wsservice = new WorkshopService();
+            VMSearchResultDisplay vm = new VMSearchResultDisplay();
+            vm.ResultType = "Derniers ajouts";
+
+            vm.VMWorshops = new List<VMWorkshop>();
+            
+            VMWorkshop vmws = new VMWorkshop();
+            vmws.Category = "Dernier ajouts";
+            vmws.Workshops = wsservice.GetLast(5);
+
+            vm.VMWorshops.Add(vmws);
+            
+            return View(vm);
         }
 
         //
