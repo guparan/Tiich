@@ -17,7 +17,7 @@ namespace TiichService.Service
 
         public override void GenericTests(Workshop obj, Utils.ErrorHandler eh)
         {
-            base.GenericTests(obj, eh);
+            eh.addError("Pas implémenté");
         }
 
         public List<Workshop> GetLast(int p)

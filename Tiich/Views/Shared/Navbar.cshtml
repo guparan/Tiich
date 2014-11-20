@@ -10,6 +10,7 @@
                 @if(User.Identity.IsAuthenticated)
                 {
                     <li>@Html.ActionLink("Proposer", "Create", "Workshop")</li>
+                    <li>@Html.ActionLink("Mon compte", "MyAccount", "User")</li>
                 }
                 
                 <li>@Html.ActionLink("A propos", "Index", "About")</li>

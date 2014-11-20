@@ -65,6 +65,7 @@ function initialize() {
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
     google.maps.event.addListener(searchBox, 'places_changed', function () {
+        
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {
@@ -93,12 +94,12 @@ function initialize() {
                 title: place.name,
                 position: place.geometry.location
             });
-
             markers.push(marker);
-
             bounds.extend(place.geometry.location);
-        }
 
+            var coord = place.geometry.location;
+            $("#Location").val(coord);
+        }
         map.fitBounds(bounds);
     });
     // [END region_getplaces]

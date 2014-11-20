@@ -6,6 +6,7 @@
 
 @using (Html.BeginForm("Create", "Workshop", FormMethod.Post))
 {
+    @Html.HiddenFor(i => i.Location)
     <div class="col-lg-10 col-lg-offset-1">
         <div class="well">
             <h1 >
