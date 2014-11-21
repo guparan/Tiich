@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApiController\ApiController.csproj">
+      <Project>{5ffd685b-0f6d-479d-9256-6e5eed1a8055}</Project>
+      <Name>ApiController</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TiichDAL\TiichDAL.csproj">
       <Project>{717216bd-9925-4ba6-9a95-780f16f79935}</Project>
       <Name>TiichDAL</Name>

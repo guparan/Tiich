@@ -22,8 +22,14 @@ namespace TiichRepository.Repository
 
                 if (!eh.hasErrors())
                 {
-
                     context.Workshop.Add(obj);
+
+                    foreach (var item in obj.Tag)
+                    {
+                        if(context.Tag.Where(u => u.label.Equals(item.label)).FirstOrDefault() != null)
+                            context.Tag.Attach(item);
+                    }
+
                     context.SaveChanges();
                 }
             }

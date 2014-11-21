@@ -17,23 +17,29 @@ namespace ApiController.Tags
         public List<string> GetTags(string pWord)
         {
             List<string> res = new List<string>();
-            string url = String.Format("{0}?word={1}&language={2}&key={3}&output=xml", _baseUrl, pWord, _language,_key);
+            try
+            {
+                string url = String.Format("{0}?word={1}&language={2}&key={3}&output=xml", _baseUrl, pWord, _language,_key);
 
-            XmlTextReader reader = new XmlTextReader(url);
-            string data = Utils.WebReader.GetWebData(url);
+                XmlTextReader reader = new XmlTextReader(url);
+                string data = Utils.WebReader.GetWebData(url);
 
-            //Extraction
-            string synStart = "<synonyms>";
-            string synStop = "</synonyms>";
-            Regex reg = new Regex(synStart + "(.)*" + synStop);
-            Match match = reg.Match(data);
-            string bob = match.ToString();
-            bob = bob.Substring(synStart.Length, bob.Length - synStart.Length);
-            bob = bob.Substring(0, bob.Length - synStop.Length);
+                //Extraction
+                string synStart = "<synonyms>";
+                string synStop = "</synonyms>";
+                Regex reg = new Regex(synStart + "(.)*" + synStop);
+                Match match = reg.Match(data);
+                string bob = match.ToString();
+                bob = bob.Substring(synStart.Length, bob.Length - synStart.Length);
+                bob = bob.Substring(0, bob.Length - synStop.Length);
 
-            char[] separator = new char[1] { '|' };
-            res = bob.Split(separator).ToList();
-            
+                char[] separator = new char[1] { '|' };
+                res = bob.Split(separator).ToList();
+            }
+            catch (Exception)
+            {
+                //Ne rien faire 
+            }
             return res;
         }
 

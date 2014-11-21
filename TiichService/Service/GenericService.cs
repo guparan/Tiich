@@ -14,7 +14,7 @@ namespace TiichService.Service
     {
         protected GenericRepository<T> _repo;
 
-        public void Add(T obj, ErrorHandler eh, List<object> toAttach = null)
+        virtual public void Add(T obj, ErrorHandler eh, List<object> toAttach = null)
         {
             GenericTests(obj, eh);
 
