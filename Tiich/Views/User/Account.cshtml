@@ -1,0 +1,11 @@
+﻿@model TiichDAL.User
+
+@{
+    bool editionMode = Model.Email.Trim().Equals(System.Security.Principal.GenericPrincipal.Current.Identity.Name) ? true : false;
+}
+
+<div class="col-lg-10 col-lg-offset-1 well">
+    <h1>
+        @editionMode
+    </h1>
+</div>
