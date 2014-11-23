@@ -3,6 +3,12 @@
 @{
     ViewBag.Title = "Proposer";
     bool edit = TempData["UserID"] == Model.ID.ToString() ? true : false; 
+    
+    if(!edit)
+    {
+        TiichService.Service.WorkshopService service = new TiichService.Service.WorkshopService();
+        service.AddVisitorToWorkshop(TempData["UserID"].ToString(), Model.ID);
+    }
 }
 
 @using (Html.BeginForm("Create", "Workshop", FormMethod.Post))
@@ -59,41 +65,85 @@
 
         <div class="col-lg-5 well">
             <h3>Détails</h3>
-            <p>@Html.TextArea("details", Model.Details, new { @class = "form-control" })</p>
+            <p>
+               @if(edit)
+               {
+                     @Html.TextArea("details", Model.Details, new { @class = "form-control" })
+               }
+               else
+               {
+                   @Model.Details
+               }   
+            </p>
         </div>
 
         <div class="col-lg-6 col-lg-offset-1 well">
             <h3>A prévoir</h3>
-            <p>@Html.TextArea("equipement", Model.Equipement, new { @class = "form-control"})</p>
+            <p>
+                @if(edit)
+                {
+                 @Html.TextArea("equipement", Model.Equipement, new { @class = "form-control"})
+                }
+                else
+                {
+                    @Model.Equipement
+                }
+            </p>
         </div>
     </div>
     <div class="col-lg-4" style="height:100%;">
         <div class="well">
-            <p>Participants :</p>
-            <p class="form-group col-lg-6">
-                Minimium :
-                @Html.TextBoxFor(i => i.PeopleMin, new { @type = "number", @class = "form-control" })
-            </p>
-
-            <p class="form-group col-lg-6">
-                Maximum :
-                @Html.TextBoxFor(i => i.PeopleMax, new { @type = "number", @class = "form-control" })
-            </p>
-
-            <p>Prix</p>
-            <div >
+            @if(edit)
+            {
+                <p>Participants :</p>
                 <p class="form-group col-lg-6">
                     Minimium :
-                    @Html.TextBoxFor(i => i.PriceMin, new { @type = "number", @class = "form-control" })
+                    @Html.TextBoxFor(i => i.PeopleMin, new { @type = "number", @class = "form-control" })
                 </p>
+
                 <p class="form-group col-lg-6">
                     Maximum :
-                    @Html.TextBoxFor(i => i.PriceMax, new { @type = "number", @class = "form-control" })
+                    @Html.TextBoxFor(i => i.PeopleMax, new { @type = "number", @class = "form-control" })
                 </p>
-            </div>
+            }
+            else
+            {
+                <p>Participants x / @Model.PeopleMax</p>
+            }
+
+            <p>Prix</p>
+            @if(edit)
+            {
+                <div >
+                    <p class="form-group col-lg-6">
+                        Minimium :
+                        @Html.TextBoxFor(i => i.PriceMin, new { @type = "number", @class = "form-control" })
+                    </p>
+                    <p class="form-group col-lg-6">
+                        Maximum :
+                        @Html.TextBoxFor(i => i.PriceMax, new { @type = "number", @class = "form-control" })
+                    </p>
+                </div>
+            }
+            else
+            {
+                if(Model.PriceMin == Model.PriceMax)
+                {
+                    <p>Atelier gratuit</p>
+                }
+                else
+                {
+                    <input type="range" min="@Model.PriceMin" min="5" max="@Model.PriceMax" onchange="updateSlideValue(this.value)" />
+                }
+            }
+
             @if(edit)
             {
                 <input type="submit" class="btn btn-primary "/>
+            }
+            else
+            {
+                @Html.ActionLink("Participer", "Participate", null, new { @class = "btn btn-success" })
             }
         </div>
 
@@ -105,3 +155,12 @@
 }
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 <script src="~/Scripts/Gmap.js"></script>
+<script type="text/javascript">
+
+    function updateSlideValue(newValue) {
+        alert(newValue);
+        document.getElementById("range").innerHTML = newValue;
+    }
+    $(document).ready(function () {
+    });
+</script>

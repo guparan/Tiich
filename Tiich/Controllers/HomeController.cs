@@ -21,6 +21,7 @@ namespace Tiich.Controllers
             if(!String.IsNullOrEmpty(research))
             {
                 WorkshopService service = new WorkshopService();
+                vm.VMWorshops = new List<VMWorkshop>();
 
                 //Recherche directe
                 List<Workshop> directWS = service.StraightSearch(research, ResearchEnums.ResearchOption.Or);
@@ -29,22 +30,48 @@ namespace Tiich.Controllers
                     Category = "Recherche direct",
                     Workshops = directWS
                 };
+                vm.VMWorshops.Add(direct);
 
                 //Recherche indirecte 
                 List<Workshop> indirectWS = service.IndirectSearch(research, ResearchEnums.ResearchOption.Or);
+
+                foreach (Workshop ws in directWS)
+	            {
+	                if(indirectWS.Contains(ws))
+	                    indirectWS.Remove(ws);
+	            }
+                
                 VMWorkshop indirect = new VMWorkshop()
                 {
                     Category = "Recherche indirect",
                     Workshops = indirectWS
                 };
-
+                vm.VMWorshops.Add(indirect);
 
                 //Recherche étendue
+                if (User.Identity.IsAuthenticated)
+                {
+                    List<Workshop> favoriteWS = service.FavoriteSearch(User.Identity.Name, research, ResearchEnums.ResearchOption.Or);
 
+                    foreach (Workshop ws in indirectWS)
+                    {
+                        if (favoriteWS.Contains(ws))
+                            favoriteWS.Remove(ws);
+                    }
+                    foreach (Workshop ws in directWS)
+                    {
+                        if (favoriteWS.Contains(ws))
+                            favoriteWS.Remove(ws);
+                    }
 
-                vm.VMWorshops = new List<VMWorkshop>();
-                vm.VMWorshops.Add(direct);
-                vm.VMWorshops.Add(indirect);
+                    VMWorkshop favorite = new VMWorkshop()
+                    {
+                        Category = "Vous aimerez aussi",
+                        Workshops = favoriteWS
+                    };
+                    vm.VMWorshops.Add(favorite);
+                }
+
 
 
                 TempData["research"] = research;

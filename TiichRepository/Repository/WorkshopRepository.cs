@@ -154,5 +154,41 @@ namespace TiichRepository.Repository
                 return context.Workshop.Where(w => w.ID == id).FirstOrDefault();
             }
         }
+
+        public void AddVisitorToWorkshop(int userID, int wsID)
+        {
+            using (TiichEntities context = new TiichEntities())
+            {
+                User user = context.User.Where(u => u.ID == userID).FirstOrDefault();
+                Workshop workshop = context.Workshop.Where(u => u.ID == wsID).FirstOrDefault();
+
+                if(user.SeenWorkshop.Where(w => w.ID != wsID).FirstOrDefault() == null)
+                {
+                    user.SeenWorkshop.Add(workshop);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public List<Workshop> FavoriteSearch(string email,string research, Enums.ResearchEnums.ResearchOption option)
+        {
+            using(TiichEntities context = new TiichEntities())
+            {
+                List<Workshop> workshops = new List<Workshop>();
+                List<Workshop> seenWS = context.User.Where(u => u.Email.Equals(email)).FirstOrDefault().SeenWorkshop.ToList();
+                List<Tag> favoriteTags = new List<Tag>();
+                foreach (Workshop ws in seenWS)
+                {
+                    favoriteTags.AddRange(ws.Tag);
+                }
+
+                foreach (Tag tag in favoriteTags)
+	            {
+                    workshops.AddRange(tag.Workshop);
+	            }
+
+                return workshops;
+            }
+        }
     }
 }

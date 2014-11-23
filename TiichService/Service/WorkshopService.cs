@@ -27,6 +27,9 @@ namespace TiichService.Service
             ThesaurusAltervista th = new ThesaurusAltervista();
             List<Tag> tagList = new List<Tag>();
             
+            //Tag the relevant words
+
+            //tag with thesaurus
             foreach (string tagLabel in th.GetTags(relevantText))
             {
                 Tag tag = new Tag();
@@ -67,6 +70,16 @@ namespace TiichService.Service
         public Workshop Find(int id)
         {
             return ((WorkshopRepository)_repo).Find(id);
+        }
+
+        public void AddVisitorToWorkshop(string userID, int wsID)
+        {
+            ((WorkshopRepository)_repo).AddVisitorToWorkshop(int.Parse(userID),wsID);
+        }
+
+        public List<Workshop> FavoriteSearch(string email, string research, ResearchEnums.ResearchOption option)
+        {
+            return ((WorkshopRepository)_repo).FavoriteSearch(email, research, option);
         }
     }
 }

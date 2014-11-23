@@ -42,7 +42,7 @@ namespace TiichDAL
                 new ObjectParameter("option", option) :
                 new ObjectParameter("option", typeof(string));
     
-            return (((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StraightSearch_Result>("StraightSearch", termParameter, optionParameter));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StraightSearch_Result>("StraightSearch", termParameter, optionParameter);
         }
     }
 }

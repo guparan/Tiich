@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TiichModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SeenWorkshops">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="WorkshopID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="WorkshopID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -65,6 +73,30 @@
           <Property Name="WorkshopID" Type="int" Nullable="false" />
           <Property Name="TagID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_SeenWorkshops_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SeenWorkshops" Type="Self.SeenWorkshops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SeenWorkshops">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeenWorkshops_Workshop">
+          <End Role="Workshop" Type="Self.Workshop" Multiplicity="1" />
+          <End Role="SeenWorkshops" Type="Self.SeenWorkshops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshop">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SeenWorkshops">
+              <PropertyRef Name="WorkshopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Workshop_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
@@ -110,11 +142,20 @@
           <Parameter Name="option" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="TiichModelStoreContainer">
+          <EntitySet Name="SeenWorkshops" EntityType="Self.SeenWorkshops" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkshopTags" EntityType="Self.WorkshopTags" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SeenWorkshops_User" Association="Self.FK_SeenWorkshops_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="SeenWorkshops" EntitySet="SeenWorkshops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeenWorkshops_Workshop" Association="Self.FK_SeenWorkshops_Workshop">
+            <End Role="Workshop" EntitySet="Workshop" />
+            <End Role="SeenWorkshops" EntitySet="SeenWorkshops" />
+          </AssociationSet>
           <AssociationSet Name="FK_Workshop_User" Association="Self.FK_Workshop_User">
             <End Role="User" EntitySet="User" />
             <End Role="Workshop" EntitySet="Workshop" />
@@ -146,9 +187,13 @@
             <End Role="Workshop" EntitySet="Workshop" />
           </AssociationSet>
           <FunctionImport Name="StraightSearch" ReturnType="Collection(TiichModel.StraightSearch_Result)">
-          <Parameter Name="term" Mode="In" Type="String" />
+            <Parameter Name="term" Mode="In" Type="String" />
             <Parameter Name="option" Mode="In" Type="String" />
           </FunctionImport>
+          <AssociationSet Name="SeenWorkshops" Association="TiichModel.SeenWorkshops">
+            <End Role="User" EntitySet="User" />
+            <End Role="Workshop" EntitySet="Workshop" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -183,6 +228,7 @@
           <Property Name="LastName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Workshop" Relationship="TiichModel.FK_Workshop_User" FromRole="User" ToRole="Workshop" />
+          <NavigationProperty Name="SeenWorkshop" Relationship="TiichModel.SeenWorkshops" FromRole="User" ToRole="Workshop" />
         </EntityType>
         <EntityType Name="Workshop">
           <Key>
@@ -205,6 +251,7 @@
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="User" Relationship="TiichModel.FK_Workshop_User" FromRole="Workshop" ToRole="User" />
           <NavigationProperty Name="Tag" Relationship="TiichModel.WorkshopTags" FromRole="Workshop" ToRole="Tag" />
+          <NavigationProperty Name="WatchedBy" Relationship="TiichModel.SeenWorkshops" FromRole="Workshop" ToRole="User" />
         </EntityType>
         <Association Name="FK_Workshop_User">
           <End Type="TiichModel.User" Role="User" Multiplicity="0..1" />
@@ -238,6 +285,10 @@
           <Property Type="String" Name="Address" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="Details" Nullable="true" MaxLength="Max" />
         </ComplexType>
+        <Association Name="SeenWorkshops">
+          <End Type="TiichModel.User" Role="User" Multiplicity="*" />
+          <End Type="TiichModel.Workshop" Role="Workshop" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -328,6 +379,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <AssociationSetMapping Name="SeenWorkshops" TypeName="TiichModel.SeenWorkshops" StoreEntitySet="SeenWorkshops">
+            <EndProperty Name="Workshop">
+              <ScalarProperty Name="ID" ColumnName="WorkshopID" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

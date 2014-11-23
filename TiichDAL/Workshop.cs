@@ -17,6 +17,7 @@ namespace TiichDAL
         public Workshop()
         {
             this.Tag = new HashSet<Tag>();
+            this.WatchedBy = new HashSet<User>();
         }
     
         public int ID { get; set; }
@@ -37,5 +38,6 @@ namespace TiichDAL
     
         public virtual User User { get; set; }
         public virtual ICollection<Tag> Tag { get; set; }
+        public virtual ICollection<User> WatchedBy { get; set; }
     }
 }

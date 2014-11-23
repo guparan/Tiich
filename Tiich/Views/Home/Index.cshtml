@@ -48,6 +48,7 @@
                             foreach(var ws in vmws.Workshops)
                             {
                                 string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
+                                
                                 <li class="panel-body list-group-item clickableList" style="@style" id="@ws.ID">
                                         <h3>@ws.Label</h3>
                                         <p>@ws.Details</p>

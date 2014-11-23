@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="TiichModel.Workshop" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="TiichModel.FK_Workshop_User" />
         <AssociationConnector Association="TiichModel.WorkshopTags" />
+        <AssociationConnector Association="TiichModel.SeenWorkshops" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -45,5 +45,10 @@ namespace Tiich.Controllers
 
             return View(ws);
         }
+
+        public void Participate()
+        {
+
+        }
     }
 }
