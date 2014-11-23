@@ -31,12 +31,20 @@ namespace Tiich.Controllers
                 };
 
                 //Recherche indirecte 
+                List<Workshop> indirectWS = service.IndirectSearch(research, ResearchEnums.ResearchOption.Or);
+                VMWorkshop indirect = new VMWorkshop()
+                {
+                    Category = "Recherche indirect",
+                    Workshops = indirectWS
+                };
+
 
                 //Recherche étendue
 
 
                 vm.VMWorshops = new List<VMWorkshop>();
                 vm.VMWorshops.Add(direct);
+                vm.VMWorshops.Add(indirect);
 
 
                 TempData["research"] = research;

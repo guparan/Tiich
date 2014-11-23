@@ -33,8 +33,8 @@ namespace TiichRepository.Repository
                     foreach (var item in obj.Tag)
                     {
                         item.label = item.label.Trim();
-                        Tag dbTag = context.Tag.Where(u => u.label.Equals(item.label)).FirstOrDefault() ; 
-                        if(dbTag != null)
+                        Tag dbTag = context.Tag.Where(u => u.label.Equals(item.label)).FirstOrDefault();
+                        if (dbTag != null)
                         {
                             dbTags.Add(dbTag);
                         }
@@ -66,7 +66,7 @@ namespace TiichRepository.Repository
 
         public List<Workshop> StraightSearch(string research, Enums.ResearchEnums.ResearchOption option)
         {
-            using(TiichEntities context = new TiichEntities())
+            using (TiichEntities context = new TiichEntities())
             {
                 List<Workshop> workshops = new List<Workshop>();
                 List<string> terms = research.Split(new char[1] { ' ' }).ToList();
@@ -79,7 +79,7 @@ namespace TiichRepository.Repository
                                 w.Details.Contains(terms.FirstOrDefault())
                                 ));
                         terms.Skip(1);
-                        while(terms.Count > 0)
+                        while (terms.Count > 0)
                         {
                             workshops = workshops.Where(w =>
                                 w.Label.Contains(terms.FirstOrDefault()) ||
@@ -90,13 +90,55 @@ namespace TiichRepository.Repository
                         break;
                     case Enums.ResearchEnums.ResearchOption.Or:
                         foreach (String term in terms)
-	                    {
+                        {
                             workshops.AddRange(context.Workshop.Where(w =>
                                 w.Label.Contains(term) ||
                                 w.Details.Contains(term)
                                 ));
-	                    }
-                            
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+                return workshops;
+            }
+        }
+
+        public List<Workshop> IndirectSearch(string research, Enums.ResearchEnums.ResearchOption option)
+        {
+            using (TiichEntities context = new TiichEntities())
+            {
+                List<Workshop> workshops = new List<Workshop>();
+                List<string> terms = research.Split(new char[1] { ' ' }).ToList();
+
+                switch (option)
+                {
+                    case Enums.ResearchEnums.ResearchOption.And:
+                        workshops.AddRange(context.Workshop.Where(w =>
+                                w.Label.Contains(terms.FirstOrDefault()) ||
+                                w.Details.Contains(terms.FirstOrDefault())
+                                ));
+                        terms.Skip(1);
+                        while (terms.Count > 0)
+                        {
+                            workshops = workshops.Where(w =>
+                                w.Label.Contains(terms.FirstOrDefault()) ||
+                                w.Details.Contains(terms.FirstOrDefault())
+                                ).ToList();
+                            terms.Skip(1);
+                        }
+                        break;
+                    case Enums.ResearchEnums.ResearchOption.Or:
+                        //Recherche sur les tags de l'annonce 
+                        List<Tag> tags = new List<Tag>();
+
+                        foreach (string term in terms)
+                        {
+                            tags.AddRange(context.Tag.Where(t => t.label.Equals(term)));
+                        }
+
+                        tags.ForEach(t => workshops.AddRange(t.Workshop));
                         break;
                     default:
                         break;

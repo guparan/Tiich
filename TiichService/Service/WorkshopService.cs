@@ -58,5 +58,10 @@ namespace TiichService.Service
         {
             return ((WorkshopRepository)_repo).StraightSearch(research, option);
         }
+
+        public List<Workshop> IndirectSearch(string research, ResearchEnums.ResearchOption option)
+        {
+            return ((WorkshopRepository)_repo).IndirectSearch(research, option);
+        }
     }
 }

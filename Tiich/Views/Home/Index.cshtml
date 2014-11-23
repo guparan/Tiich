@@ -32,7 +32,9 @@
         {
             foreach(var vmws in Model.VMWorshops)
             {
-                <div class="panel panel-group" style="background-color: #EF6C00; ">
+                if(vmws.Workshops.Count != 0)
+                {
+                  <div class="panel panel-group" style="background-color: #EF6C00; ">
                     <div class="panel-heading">
 
                         <h3>@vmws.Category<span class="badge" style="float:right">@vmws.Workshops.Count</span></h3>
@@ -41,25 +43,26 @@
                     {
                         <ul class="list-group">
 
-                        </ul>
-                        int i = 0;
-                        foreach(var ws in vmws.Workshops)
-                        {
+                        @{
+                            int i = 0;
+                            foreach(var ws in vmws.Workshops)
+                            {
 
-                            string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
+                                string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
                                 
-                            <div class="panel-body list-group-item" style="@style">
-                                <h3>@ws.Label</h3>
-                                <p>@ws.Details</p>
-                                <p>@ws.Address</p>
-                                <p>@ws.CreationDate</p>
-                            </div>
-                            i++;
+                                <div class="panel-body list-group-item" style="@style">
+                                    <h3>@ws.Label</h3>
+                                    <p>@ws.Details</p>
+                                    <p>@ws.Address</p>
+                                    <p>@ws.CreationDate</p>
+                                </div>
+                                i++;
+                            }
                         }
+                        </ul>
                     }
                 </div>
-            
-                
+                }
             }    
         }
         
