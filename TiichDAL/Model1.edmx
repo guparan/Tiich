@@ -22,7 +22,6 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="parentId" Type="int" />
           <Property Name="label" Type="nchar" MaxLength="100" Nullable="false" />
-          <Property Name="workshopID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -58,18 +57,14 @@
           <Property Name="Address" Type="text" />
           <Property Name="Details" Type="text" />
         </EntityType>
-        <Association Name="FK_Tag_Workshop">
-          <End Role="Workshop" Type="Self.Workshop" Multiplicity="1" />
-          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workshop">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Tag">
-              <PropertyRef Name="workshopID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="WorkshopTags">
+          <Key>
+            <PropertyRef Name="WorkshopID" />
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="WorkshopID" Type="int" Nullable="false" />
+          <Property Name="TagID" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Workshop_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
@@ -82,18 +77,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WorkshopTags_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WorkshopTags" Type="Self.WorkshopTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkshopTags">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopTags_Workshop">
+          <End Role="Workshop" Type="Self.Workshop" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WorkshopTags" Type="Self.WorkshopTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshop">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkshopTags">
+              <PropertyRef Name="WorkshopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="StraightSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="term" Type="nvarchar" Mode="In" />
+          <Parameter Name="option" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="TiichModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Tag_Workshop" Association="Self.FK_Tag_Workshop">
-            <End Role="Workshop" EntitySet="Workshop" />
-            <End Role="Tag" EntitySet="Tag" />
-          </AssociationSet>
+          <EntitySet Name="WorkshopTags" EntityType="Self.WorkshopTags" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Workshop_User" Association="Self.FK_Workshop_User">
             <End Role="User" EntitySet="User" />
             <End Role="Workshop" EntitySet="Workshop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopTags_Tag" Association="Self.FK_WorkshopTags_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="WorkshopTags" EntitySet="WorkshopTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopTags_Workshop" Association="Self.FK_WorkshopTags_Workshop">
+            <End Role="Workshop" EntitySet="Workshop" />
+            <End Role="WorkshopTags" EntitySet="WorkshopTags" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -105,14 +137,18 @@
           <EntitySet Name="Tag" EntityType="TiichModel.Tag" />
           <EntitySet Name="User" EntityType="TiichModel.User" />
           <EntitySet Name="Workshop" EntityType="TiichModel.Workshop" />
-          <AssociationSet Name="FK_Tag_Workshop" Association="TiichModel.FK_Tag_Workshop">
-            <End Role="Workshop" EntitySet="Workshop" />
-            <End Role="Tag" EntitySet="Tag" />
-          </AssociationSet>
           <AssociationSet Name="FK_Workshop_User" Association="TiichModel.FK_Workshop_User">
             <End Role="User" EntitySet="User" />
             <End Role="Workshop" EntitySet="Workshop" />
           </AssociationSet>
+          <AssociationSet Name="WorkshopTags" Association="TiichModel.WorkshopTags">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="Workshop" EntitySet="Workshop" />
+          </AssociationSet>
+          <FunctionImport Name="StraightSearch" ReturnType="Collection(TiichModel.StraightSearch_Result)">
+          <Parameter Name="term" Mode="In" Type="String" />
+            <Parameter Name="option" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -131,8 +167,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="parentId" Type="Int32" />
           <Property Name="label" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="workshopID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Workshop" Relationship="TiichModel.FK_Tag_Workshop" FromRole="Tag" ToRole="Workshop" />
+          <NavigationProperty Name="Workshop" Relationship="TiichModel.WorkshopTags" FromRole="Tag" ToRole="Workshop" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -168,21 +203,9 @@
           <Property Name="UserID" Type="Int32" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tag" Relationship="TiichModel.FK_Tag_Workshop" FromRole="Workshop" ToRole="Tag" />
           <NavigationProperty Name="User" Relationship="TiichModel.FK_Workshop_User" FromRole="Workshop" ToRole="User" />
+          <NavigationProperty Name="Tag" Relationship="TiichModel.WorkshopTags" FromRole="Workshop" ToRole="Tag" />
         </EntityType>
-        <Association Name="FK_Tag_Workshop">
-          <End Type="TiichModel.Workshop" Role="Workshop" Multiplicity="1" />
-          <End Type="TiichModel.Tag" Role="Tag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workshop">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Tag">
-              <PropertyRef Name="workshopID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Workshop_User">
           <End Type="TiichModel.User" Role="User" Multiplicity="0..1" />
           <End Type="TiichModel.Workshop" Role="Workshop" Multiplicity="*" />
@@ -195,6 +218,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="WorkshopTags">
+          <End Type="TiichModel.Tag" Role="Tag" Multiplicity="*" />
+          <End Type="TiichModel.Workshop" Role="Workshop" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="StraightSearch_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Label" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="Time" Name="Hour" Nullable="true" />
+          <Property Type="Int32" Name="PeopleMin" Nullable="false" />
+          <Property Type="Int32" Name="PeopleMax" Nullable="false" />
+          <Property Type="Double" Name="PriceMin" Nullable="true" />
+          <Property Type="Double" Name="PriceMax" Nullable="true" />
+          <Property Type="String" Name="Recurence" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Equipement" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="UserID" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="Max" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -215,7 +258,6 @@
           <EntitySetMapping Name="Tag">
             <EntityTypeMapping TypeName="TiichModel.Tag">
               <MappingFragment StoreEntitySet="Tag">
-                <ScalarProperty Name="workshopID" ColumnName="workshopID" />
                 <ScalarProperty Name="label" ColumnName="label" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -258,6 +300,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="WorkshopTags" TypeName="TiichModel.WorkshopTags" StoreEntitySet="WorkshopTags">
+            <EndProperty Name="Workshop">
+              <ScalarProperty Name="ID" ColumnName="WorkshopID" />
+            </EndProperty>
+            <EndProperty Name="Tag">
+              <ScalarProperty Name="ID" ColumnName="TagID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="StraightSearch" FunctionName="TiichModel.Store.StraightSearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TiichModel.StraightSearch_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Hour" ColumnName="Hour" />
+                <ScalarProperty Name="PeopleMin" ColumnName="PeopleMin" />
+                <ScalarProperty Name="PeopleMax" ColumnName="PeopleMax" />
+                <ScalarProperty Name="PriceMin" ColumnName="PriceMin" />
+                <ScalarProperty Name="PriceMax" ColumnName="PriceMax" />
+                <ScalarProperty Name="Recurence" ColumnName="Recurence" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Equipement" ColumnName="Equipement" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

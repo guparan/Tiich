@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0DD7F0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodedUITestProject1", "CodedUITestProject1\CodedUITestProject1.csproj", "{3B92D6C5-06CB-4475-9DB8-B393271A0FA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enums\Enums.csproj", "{46C6E2F0-4EDB-4CC2-BCE7-E9078511D25D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{3B92D6C5-06CB-4475-9DB8-B393271A0FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B92D6C5-06CB-4475-9DB8-B393271A0FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B92D6C5-06CB-4475-9DB8-B393271A0FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46C6E2F0-4EDB-4CC2-BCE7-E9078511D25D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46C6E2F0-4EDB-4CC2-BCE7-E9078511D25D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46C6E2F0-4EDB-4CC2-BCE7-E9078511D25D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46C6E2F0-4EDB-4CC2-BCE7-E9078511D25D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

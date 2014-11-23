@@ -54,11 +54,32 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThesaurusTest.cs" />
     <Compile Include="UnitTest1.cs" />
+    <Compile Include="DatabaseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApiController\ApiController.csproj">
       <Project>{5ffd685b-0f6d-479d-9256-6e5eed1a8055}</Project>
       <Name>ApiController</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TiichDAL\TiichDAL.csproj">
+      <Project>{717216bd-9925-4ba6-9a95-780f16f79935}</Project>
+      <Name>TiichDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TiichRepository\TiichRepository.csproj">
+      <Project>{c87f0380-79f0-4131-b7d7-973c2a33778d}</Project>
+      <Name>TiichRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TiichService\TiichService.csproj">
+      <Project>{4a20af13-a5e1-4be9-b2cb-b2f81b8764ed}</Project>
+      <Name>TiichService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tiich\Tiich.csproj">
+      <Project>{33a3ce11-ae87-4bea-896e-9f4d3ca97310}</Project>
+      <Name>Tiich</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{6593fa8c-d1d7-4bd0-9bad-bea0399ff000}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

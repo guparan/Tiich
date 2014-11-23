@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Enums\Enums.csproj">
+      <Project>{46c6e2f0-4edb-4cc2-bce7-e9078511d25d}</Project>
+      <Name>Enums</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TiichDAL\TiichDAL.csproj">
       <Project>{717216bd-9925-4ba6-9a95-780f16f79935}</Project>
       <Name>TiichDAL</Name>

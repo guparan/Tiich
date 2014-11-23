@@ -9,15 +9,16 @@
         <h1>Tiich</h1>
 
 
-        @using (Html.BeginForm("classicSearch", "Search", FormMethod.Post, new { @class = "form-horizontal", @role="form" }))
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
         {
             <div class="form-group">
                 <div class="col-sm-9">
-                    @Html.TextBox("research", "", new { @class = "form-control", @placeholder="Rechercher" })
+                    @Html.TextBox("research", 
+                    TempData["research"] != null ? TempData["research"] : String.Empty,
+                    new { @class = "form-control", @placeholder="Rechercher" })
                 </div>
                 <div class="">
-                    <input type="submit" class="btn btn-default" name="runSimulation" value="Go !" />
-                    @Html.ActionLink("Recherche magique", "magicSearch", "SearchController", null, new { @class = "btn btn-primary " })
+                    <input type="submit" class="btn btn-primary" name="runSimulation" value="Go !" />
                 </div>
             </div>
         }
@@ -31,20 +32,34 @@
         {
             foreach(var vmws in Model.VMWorshops)
             {
-                <h2>@vmws.Category</h2>
-            
-                if(vmws.Workshops != null)
-                {
-                    foreach(var ws in vmws.Workshops)
+                <div class="panel panel-group" style="background-color: #EF6C00; ">
+                    <div class="panel-heading">
+
+                        <h3>@vmws.Category<span class="badge" style="float:right">@vmws.Workshops.Count</span></h3>
+                    </div>
+                    @if(vmws.Workshops != null)
                     {
-                        <div class="well">
-                            <h3>@ws.Label</h3>
-                            <p>@ws.Details</p>
-                            <p>@ws.Address</p>
-                            <p>@ws.CreationDate</p>
-                        </div>
-                    }    
-                }
+                        <ul class="list-group">
+
+                        </ul>
+                        int i = 0;
+                        foreach(var ws in vmws.Workshops)
+                        {
+
+                            string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
+                                
+                            <div class="panel-body list-group-item" style="@style">
+                                <h3>@ws.Label</h3>
+                                <p>@ws.Details</p>
+                                <p>@ws.Address</p>
+                                <p>@ws.CreationDate</p>
+                            </div>
+                            i++;
+                        }
+                    }
+                </div>
+            
+                
             }    
         }
         

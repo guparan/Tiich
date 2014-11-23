@@ -13,6 +13,10 @@ namespace Tiich.Controllers
 {
     public class UserController : Controller
     {
+        public ActionResult Index()
+        {
+            return View(new User());
+        }
         [HttpPost]
         public ActionResult SignIn(User user)
         {

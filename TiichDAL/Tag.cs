@@ -14,11 +14,15 @@ namespace TiichDAL
     
     public partial class Tag
     {
+        public Tag()
+        {
+            this.Workshop = new HashSet<Workshop>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> parentId { get; set; }
         public string label { get; set; }
-        public int workshopID { get; set; }
     
-        public virtual Workshop Workshop { get; set; }
+        public virtual ICollection<Workshop> Workshop { get; set; }
     }
 }

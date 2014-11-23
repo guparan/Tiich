@@ -1,4 +1,5 @@
 ﻿using ApiController.Tags;
+using Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,11 @@ namespace TiichService.Service
         public List<Workshop> GetLast(int p)
         {
             return ((WorkshopRepository)_repo).GetLast(p);
+        }
+
+        public List<Workshop> StraightSearch(string research, ResearchEnums.ResearchOption option)
+        {
+            return ((WorkshopRepository)_repo).StraightSearch(research, option);
         }
     }
 }

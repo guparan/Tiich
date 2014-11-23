@@ -6,27 +6,68 @@ using System.Web.Mvc;
 using Tiich.ViewModels;
 using TiichDAL;
 using TiichService.Service;
+using Enums;
 
 namespace Tiich.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpPost]
+        public ActionResult Index()
+        {
+            VMSearchResultDisplay vm = new VMSearchResultDisplay();
+            string research = Request["research"];
+            
+            if(!String.IsNullOrEmpty(research))
+            {
+                WorkshopService service = new WorkshopService();
+
+                //Recherche directe
+                List<Workshop> directWS = service.StraightSearch(research, ResearchEnums.ResearchOption.Or);
+                VMWorkshop direct = new VMWorkshop()
+                {
+                    Category = "Recherche direct",
+                    Workshops = directWS
+                };
+
+                //Recherche indirecte 
+
+                //Recherche étendue
+
+
+                vm.VMWorshops = new List<VMWorkshop>();
+                vm.VMWorshops.Add(direct);
+
+
+                TempData["research"] = research;
+                return View(vm);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
         //
         // GET: /Home/
 
-        public ActionResult Index()
+        public ActionResult Index(VMSearchResultDisplay vm = null)
         {
-            WorkshopService wsservice = new WorkshopService();
-            VMSearchResultDisplay vm = new VMSearchResultDisplay();
-            vm.ResultType = "Derniers ajouts";
+            if(VMSearchResultDisplay.IsNullOrEmpty(vm))
+            {
+                WorkshopService wsservice = new WorkshopService();
+                vm = new VMSearchResultDisplay();
+                vm.ResultType = "Derniers ajouts";
 
-            vm.VMWorshops = new List<VMWorkshop>();
+                vm.VMWorshops = new List<VMWorkshop>();
+
+                VMWorkshop vmws = new VMWorkshop();
+                vmws.Category = "Dernier ajouts";
+                vmws.Workshops = wsservice.GetLast(5);
+
+                vm.VMWorshops.Add(vmws);
             
-            VMWorkshop vmws = new VMWorkshop();
-            vmws.Category = "Dernier ajouts";
-            vmws.Workshops = wsservice.GetLast(5);
-
-            vm.VMWorshops.Add(vmws);
+            }
             
             return View(vm);
         }
