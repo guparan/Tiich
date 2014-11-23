@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Proposer";
+    bool edit = TempData["UserID"] == Model.ID.ToString() ? true : false; 
 }
 
 @using (Html.BeginForm("Create", "Workshop", FormMethod.Post))
@@ -10,7 +11,16 @@
     <div class="col-lg-10 col-lg-offset-1">
         <div class="well">
             <h1 >
-                @Html.TextBox("Label", Model.Label, new { @class = "form-control", @placeholder = "Votre titre ici" })
+                @{
+                    if(edit)
+                    {
+                        @Html.TextBox("Label", Model.Label, new { @class = "form-control", @placeholder = "Votre titre ici" })
+                    }
+                    else
+                    {
+                        @Model.Label
+                    }   
+                }
             </h1>
         </div>
     </div>
@@ -20,13 +30,27 @@
         <div class="well col-lg-12" style="height:100%;">
             <div class="col-lg-6">
                 <div>
-                    <p class="list-group-item">Date : @Html.TextBoxFor(model => model.Date, new { type = "date", @class = "form-control", @value = DateTime.Now.ToShortDateString() })</p>
-                    <p class="list-group-item">Heure : @Html.TextBoxFor(i => i.Hour, new { type="time",  @class = "form-control", @placeholder = DateTime.Now.AddHours(1).ToShortTimeString() })</p>
-                </div>
+                    @if(edit)
+                    {
+                        <p class="list-group-item">Date : @Html.TextBoxFor(model => model.Date, new { type = "date", @class = "form-control", @value = DateTime.Now.ToShortDateString() })</p>
+                        <p class="list-group-item">Heure : @Html.TextBoxFor(i => i.Hour, new { type="time",  @class = "form-control", @placeholder = DateTime.Now.AddHours(1).ToShortTimeString() })</p>
+                    }
+                    else
+                    {
+                        <p class="list-group-item">Date : @DateTime.Now.ToShortDateString()</p>
+                        <p class="list-group-item">Heure : @DateTime.Now.AddHours(1).ToShortTimeString()</p>
+                    }
+                    </div>
             </div>
             <div class="col-lg-6">
-                @Html.TextBox("address", Model.Address, new { @placeholder = "Nowhere" })
-
+                @if(edit)
+                {
+                    @Html.TextBox("address", Model.Address, new { @placeholder = "Nowhere" })
+                }
+                else
+                {
+                    @Html.TextBox("address", Model.Address, new { @placeholder = @Model.Address, @class = "disabled"})
+                }
 
                 <div id="map">
                 </div>
@@ -67,7 +91,10 @@
                     @Html.TextBoxFor(i => i.PriceMax, new { @type = "number", @class = "form-control" })
                 </p>
             </div>
-            <input type="submit" class="btn btn-primary "/>
+            @if(edit)
+            {
+                <input type="submit" class="btn btn-primary "/>
+            }
         </div>
 
         <div class="well" style="height:100%;">

@@ -146,5 +146,13 @@ namespace TiichRepository.Repository
                 return workshops;
             }
         }
+
+        public Workshop Find(int id)
+        {
+            using(TiichEntities context = new TiichEntities())
+            {
+                return context.Workshop.Where(w => w.ID == id).FirstOrDefault();
+            }
+        }
     }
 }

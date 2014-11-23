@@ -15,12 +15,17 @@ namespace Tiich.Controllers
         public ActionResult Create(int id = -1)
         {
             Workshop ws = new Workshop();
-            
+            WorkshopService service = new WorkshopService();
+            UserService userService = new UserService();
+
             if(id != -1)
             {
-
+                ws = service.Find(id);
             }
 
+            if(User.Identity.IsAuthenticated)
+                TempData["UserID"] = userService.GetUserByName(User.Identity.Name).ID;
+            
             return View(ws);
         }
 

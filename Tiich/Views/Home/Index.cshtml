@@ -47,15 +47,13 @@
                             int i = 0;
                             foreach(var ws in vmws.Workshops)
                             {
-
                                 string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
-                                
-                                <div class="panel-body list-group-item" style="@style">
-                                    <h3>@ws.Label</h3>
-                                    <p>@ws.Details</p>
-                                    <p>@ws.Address</p>
-                                    <p>@ws.CreationDate</p>
-                                </div>
+                                <li class="panel-body list-group-item clickableList" style="@style" id="@ws.ID">
+                                        <h3>@ws.Label</h3>
+                                        <p>@ws.Details</p>
+                                        <p>@ws.Address</p>
+                                        <p>@ws.CreationDate</p>
+                                </li>
                                 i++;
                             }
                         }
@@ -70,3 +68,11 @@
 
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".clickableList").click(function (obj) {
+            var id = $(this).attr('id');
+            window.location.replace("/Workshop/Create/" + id);
+        })
+    })
+</script>

@@ -63,5 +63,10 @@ namespace TiichService.Service
         {
             return ((WorkshopRepository)_repo).IndirectSearch(research, option);
         }
+
+        public Workshop Find(int id)
+        {
+            return ((WorkshopRepository)_repo).Find(id);
+        }
     }
 }
