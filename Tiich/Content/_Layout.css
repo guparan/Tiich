@@ -22,3 +22,42 @@ li.LogInButton{
 li.LogOutButton{
     background-color:red;
 }
+
+img.roundedImage{
+    overflow:hidden;
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;
+    width:90px;
+    height:90px;
+    align-content:center;
+    margin:20px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+img.roundedImage.roundedImage-mini{
+    width:40px;
+    height:40px;
+    margin-top:0px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

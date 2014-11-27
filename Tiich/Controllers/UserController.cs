@@ -13,6 +13,33 @@ namespace Tiich.Controllers
 {
     public class UserController : Controller
     {
+        [HttpPost]
+        public ActionResult EditAvatar(HttpPostedFileBase file)
+        {
+            string baseUrl = "~/Content/Avatars/";
+            UserService service = new UserService();
+            ErrorHandler eh = new ErrorHandler();
+            User user = service.GetUserByName(User.Identity.Name);
+
+            try
+            {
+                /*Geting the file name*/
+                string filename = System.IO.Path.GetFileName(file.FileName);
+                /*Saving the file in server folder*/
+                file.SaveAs(Server.MapPath(baseUrl + this.Request["ID"] + ".jpeg"));
+
+                user.Avatar = user.ID.ToString() + ".jpeg";
+                service.Edit(user, eh);
+
+                ViewBag.Message = "File Uploaded successfully.";
+            }
+            catch
+            {
+                ViewBag.Message = "Error while uploading the files.";
+            }
+            return Account(user.ID);
+        }
+
         public ActionResult Index()
         {
             return View(new User());
@@ -84,6 +111,26 @@ namespace Tiich.Controllers
                 user = null;
 
             return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Account(User user)
+        {
+            UserService service = new UserService();
+            ErrorHandler eh = new ErrorHandler();
+
+
+            User dbUser = service.GetUserByName(user.Email);
+            
+            dbUser.FirstName = user.FirstName;
+            dbUser.LastName = user.LastName;
+            dbUser.Birthday = user.Birthday;
+            dbUser.Bio = user.Bio;
+            dbUser.Phone = user.Phone;
+            
+            service.Edit(dbUser, eh);
+
+            return View(dbUser);
         }
     }
 }

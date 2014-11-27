@@ -65,6 +65,8 @@
     <Compile Include="Tags\ITagGetter.cs" />
     <Compile Include="Tags\TagDictionnaire.cs" />
     <Compile Include="Tags\ThesaurusAltervista.cs" />
+    <Compile Include="WordExtraction\HomeMadeExtraction.cs" />
+    <Compile Include="WordExtraction\IRelevantWords.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

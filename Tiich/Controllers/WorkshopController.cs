@@ -35,20 +35,36 @@ namespace Tiich.Controllers
             UserService userService = new UserService();
             WorkshopService service = new WorkshopService();
             ErrorHandler eh = new ErrorHandler();
-
-            //Consolidation
             User user = userService.GetUserByName(User.Identity.Name);
-            ws.User = user;
-            ws.CreationDate = DateTime.Now;
 
-            service.Add(ws, eh, new List<object>(){user});
+            if(ws.ID == 0)
+            {
+                //Consolidation
+                ws.User = user;
+                ws.CreationDate = DateTime.Now;
 
-            return View(ws);
+                service.Add(ws, eh, new List<object>() { user });
+
+            }
+            else
+            {
+                ws.UserID = user.ID;
+                service.Edit(ws, eh);
+            }
+
+            if (User.Identity.IsAuthenticated)
+                TempData["UserID"] = userService.GetUserByName(User.Identity.Name).ID; 
+            
+            //return View(ws);
+            return RedirectToAction("Index", "Home");
+
         }
 
-        public void Participate()
+        public ActionResult Participate()
         {
-
+            int userID = int.Parse(Request["userID"]);
+            int wsID = int.Parse(Request["workshopID"]);
+            return Create(wsID);
         }
     }
 }

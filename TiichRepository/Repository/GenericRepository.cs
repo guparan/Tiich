@@ -45,7 +45,7 @@ namespace TiichRepository.Repository
 
                 if (!eh.hasErrors())
                 {
-                    context.Entry(obj);
+                    context.Entry(obj).State = EntityState.Modified;
                     context.SaveChanges();
                 }
             }

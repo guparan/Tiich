@@ -22,12 +22,17 @@ namespace TiichRepository.Repository
         {
             using (TiichEntities context = new TiichEntities())
             {
-                //Email unique
-                User old = context.User.Where(u => u.Email.Equals(user.Email)).FirstOrDefault();
-                if(old != null)
+                //Si création
+                if(user.ID == null )
                 {
-                    eh.addError("Email déjà présent dans la base de donnée");
+                    //Email unique
+                    User old = context.User.Where(u => u.Email.Equals(user.Email)).FirstOrDefault();
+                    if (old != null)
+                    {
+                        eh.addError("Email déjà présent dans la base de donnée");
+                    }
                 }
+                
             }
         }
 
@@ -35,7 +40,7 @@ namespace TiichRepository.Repository
         {
             using (TiichEntities context = new TiichEntities())
             {
-                User user = context.User.Where(u => u.Email.Equals(p)).FirstOrDefault();
+                User user = context.User.Include("Workshop").Include("ParticipateAt").Where(u => u.Email.Equals(p)).FirstOrDefault();
                 return user;
             }
         }

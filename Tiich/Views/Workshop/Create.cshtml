@@ -2,9 +2,20 @@
 
 @{
     ViewBag.Title = "Proposer";
-    bool edit = TempData["UserID"] == Model.ID.ToString() ? true : false; 
+    string x = TempData["UserID"].ToString();
+
+    bool edit = false;
     
-    if(!edit)
+    if(Model.ID == 0)
+    {
+        edit = true;
+    }
+    else if(Model.UserID.ToString().Equals(x))
+    {
+        edit = true;
+    }
+    
+    if(!edit && x != null)
     {
         TiichService.Service.WorkshopService service = new TiichService.Service.WorkshopService();
         service.AddVisitorToWorkshop(TempData["UserID"].ToString(), Model.ID);
@@ -13,6 +24,12 @@
 
 @using (Html.BeginForm("Create", "Workshop", FormMethod.Post))
 {
+    if(edit)
+    {
+        @Html.HiddenFor(m => m.CreationDate)
+        @Html.HiddenFor(m => m.User)
+        @Html.HiddenFor(m => m.UserID)
+    }
     @Html.HiddenFor(i => i.Location)
     <div class="col-lg-10 col-lg-offset-1">
         <div class="well">
@@ -108,48 +125,43 @@
             }
             else
             {
-                <p>Participants x / @Model.PeopleMax</p>
-            }
+                <div> 
+                    @{
+                        int participants = 0;
+                        foreach(TiichDAL.User us in Model.Participants)
+                        {
+                            string imgPath = "/Content/Avatars/" + (us.Avatar == null ? "null.png" : us.Avatar) + ".png";
+                            <img src=@imgPath class="roundedImage col-lg-2"/>
+                        }
 
-            <p>Prix</p>
-            @if(edit)
-            {
-                <div >
-                    <p class="form-group col-lg-6">
-                        Minimium :
-                        @Html.TextBoxFor(i => i.PriceMin, new { @type = "number", @class = "form-control" })
-                    </p>
-                    <p class="form-group col-lg-6">
-                        Maximum :
-                        @Html.TextBoxFor(i => i.PriceMax, new { @type = "number", @class = "form-control" })
-                    </p>
+                        for (; participants < Model.PeopleMax; participants++)
+                        {
+                            <img src="~/Content/Avatars/emptySpace.png" class="roundedImage roundedImage-mini " style="display:inline;margin-top:0px;"/>
+                        }
+                        
+                    }
                 </div>
             }
-            else
-            {
-                if(Model.PriceMin == Model.PriceMax)
-                {
-                    <p>Atelier gratuit</p>
-                }
-                else
-                {
-                    <input type="range" min="@Model.PriceMin" min="5" max="@Model.PriceMax" onchange="updateSlideValue(this.value)" />
-                }
-            }
 
+           
             @if(edit)
             {
                 <input type="submit" class="btn btn-primary "/>
             }
             else
             {
-                @Html.ActionLink("Participer", "Participate", null, new { @class = "btn btn-success" })
+                
+                @Html.ActionLink("Participer", "Participate", new { userID = TempData["UserID"], workshopID = Model.ID }, new { @class = "btn btn-success" })
             }
         </div>
 
-        <div class="well" style="height:100%;">
-            <h3>Bio</h3>
-        </div>
+        @if(!edit)
+        {
+            <div class="well" style="height:100%;">
+                <h3>@Model.User.Email</h3>
+            
+            </div>
+        }
     </div>
 </div>
 }

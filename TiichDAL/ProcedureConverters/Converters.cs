@@ -9,6 +9,7 @@ namespace TiichDAL.ProcedureConverters
 {
     public class Converters
     {
+        /*
         public static List<Workshop> ConvertToWorkshops(ObjectResult<StraightSearch_Result> result)
         {
             List<Workshop> workshops = new List<Workshop>();
@@ -19,6 +20,6 @@ namespace TiichDAL.ProcedureConverters
             }
 
             return workshops;
-        }
+        }*/
     }
 }

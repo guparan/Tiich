@@ -6,14 +6,22 @@
         <div class="" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Rechercher", "Index", "Home")</li>
+                <li>@Html.ActionLink("A propos", "Index", "About")</li>
 
                 @if(User.Identity.IsAuthenticated)
                 {
                     <li>@Html.ActionLink("Proposer", "Create", "Workshop")</li>
-                    <li>@Html.ActionLink("Mon compte", "Account", "User")</li>
+                    TiichService.Service.UserService service = new TiichService.Service.UserService();
+                    TiichDAL.User user = service.GetUserByName(User.Identity.Name);
+                    string imgPath = "/Content/Avatars/" + (user.Avatar == null ? "null.png" : user.Avatar);
+                    
+                    <li>
+                        <a href="/User/Account" style="padding:5px;height:50px;" >
+                            <img src="@imgPath" class="roundedImage roundedImage-mini"/>
+                        </a>
+                    </li>
                 }
                 
-                <li>@Html.ActionLink("A propos", "Index", "About")</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(User.Identity.IsAuthenticated)

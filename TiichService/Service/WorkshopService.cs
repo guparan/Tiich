@@ -1,4 +1,5 @@
 ﻿using ApiController.Tags;
+using ApiController.WordExtraction;
 using Enums;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace TiichService.Service
     {
         public override void Add(Workshop obj, Utils.ErrorHandler eh, List<object> toAttach = null)
         {
+            IRelevantWords extractor = new HomeMadeExtraction();
+
             //Prepare the texte 
             char[] separator = new char[1] {' '};
             List<string> textToProcess = obj.Label.Split(separator).ToList();
@@ -21,7 +24,7 @@ namespace TiichService.Service
             if(!String.IsNullOrEmpty(obj.Details))
                 textToProcess.AddRange(obj.Details.Split(separator).ToList());
             
-            List<string> relevantText = textToProcess;
+            List<string> relevantText = (textToProcess);
 
             //Tagg the rest 
             ThesaurusAltervista th = new ThesaurusAltervista();

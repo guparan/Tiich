@@ -18,6 +18,7 @@ namespace TiichDAL
         {
             this.Workshop = new HashSet<Workshop>();
             this.SeenWorkshop = new HashSet<Workshop>();
+            this.ParticipateAt = new HashSet<Workshop>();
         }
     
         public string Password { get; set; }
@@ -32,5 +33,6 @@ namespace TiichDAL
     
         public virtual ICollection<Workshop> Workshop { get; set; }
         public virtual ICollection<Workshop> SeenWorkshop { get; set; }
+        public virtual ICollection<Workshop> ParticipateAt { get; set; }
     }
 }

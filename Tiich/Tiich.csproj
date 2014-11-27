@@ -144,6 +144,8 @@
     <Compile Include="ViewModels\VMWorkshop.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Avatars\emptySpace.png" />
+    <Content Include="Content\Avatars\null.png" />
     <Content Include="Content\Bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\Bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\Bootstrap\css\bootstrap.css" />

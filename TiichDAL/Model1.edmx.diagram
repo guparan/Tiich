@@ -8,10 +8,11 @@
         <EntityTypeShape EntityType="TiichModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="TiichModel.Tag" Width="1.5" PointX="0.75" PointY="2.25" />
         <EntityTypeShape EntityType="TiichModel.User" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="TiichModel.Workshop" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="TiichModel.Workshop" Width="1.5" PointX="3" PointY="1.125" />
         <AssociationConnector Association="TiichModel.FK_Workshop_User" />
         <AssociationConnector Association="TiichModel.WorkshopTags" />
         <AssociationConnector Association="TiichModel.SeenWorkshops" />
+        <AssociationConnector Association="TiichModel.Participation1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -27,7 +27,7 @@ namespace TiichRepository.Repository
 
                 if (!eh.hasErrors())
                 {
-
+                    
                     List<Tag> dbTags = new List<Tag>();
 
                     foreach (var item in obj.Tag)
@@ -47,10 +47,14 @@ namespace TiichRepository.Repository
                     }
 
                     context.Workshop.Add(obj);
-                    context.SaveChanges();
+                    //context.SaveChanges();
 
-                    obj.Tag = dbTags;
-                    context.Entry(obj).State = EntityState.Modified;
+                    //obj.Tag = dbTags;
+                    //context.Entry(obj).State = EntityState.Modified;
+
+                    //context.Workshop.Add(obj);
+                    context.User.Attach(obj.User);
+                    
                     context.SaveChanges();
                 }
             }
@@ -60,7 +64,7 @@ namespace TiichRepository.Repository
         {
             using (TiichEntities context = new TiichEntities())
             {
-                return context.Workshop.OrderByDescending(w => w.CreationDate).Take(p).ToList();
+                return context.Workshop.Include("User").OrderByDescending(w => w.CreationDate).Take(p).ToList();
             }
         }
 
@@ -74,7 +78,7 @@ namespace TiichRepository.Repository
                 switch (option)
                 {
                     case Enums.ResearchEnums.ResearchOption.And:
-                        workshops.AddRange(context.Workshop.Where(w =>
+                        workshops.AddRange(context.Workshop.Include("User").Where(w =>
                                 w.Label.Contains(terms.FirstOrDefault()) ||
                                 w.Details.Contains(terms.FirstOrDefault())
                                 ));
@@ -91,7 +95,7 @@ namespace TiichRepository.Repository
                     case Enums.ResearchEnums.ResearchOption.Or:
                         foreach (String term in terms)
                         {
-                            workshops.AddRange(context.Workshop.Where(w =>
+                            workshops.AddRange(context.Workshop.Include("User").Where(w =>
                                 w.Label.Contains(term) ||
                                 w.Details.Contains(term)
                                 ));
@@ -115,7 +119,7 @@ namespace TiichRepository.Repository
                 switch (option)
                 {
                     case Enums.ResearchEnums.ResearchOption.And:
-                        workshops.AddRange(context.Workshop.Where(w =>
+                        workshops.AddRange(context.Workshop.Include("User").Where(w =>
                                 w.Label.Contains(terms.FirstOrDefault()) ||
                                 w.Details.Contains(terms.FirstOrDefault())
                                 ));
@@ -151,7 +155,7 @@ namespace TiichRepository.Repository
         {
             using(TiichEntities context = new TiichEntities())
             {
-                return context.Workshop.Where(w => w.ID == id).FirstOrDefault();
+                return context.Workshop.Include("User").Include("Participants").Where(w => w.ID == id).FirstOrDefault();
             }
         }
 

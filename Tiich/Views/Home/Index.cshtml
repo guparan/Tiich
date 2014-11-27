@@ -50,11 +50,24 @@
                                 string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
                                 
                                 <li class="panel-body list-group-item clickableList" style="@style" id="@ws.ID">
+                                    
+                                    <!-- Workshop -->
+                                    <div class="col-lg-9">
                                         <h3>@ws.Label</h3>
                                         <p>@ws.Details</p>
                                         <p>@ws.Address</p>
                                         <p>@ws.CreationDate</p>
-                                </li>
+                                    </div>
+
+                                    <!-- User-->
+                                    <div class="col-lg-3">
+                                        @{
+                                            string imgPath = "/Content/Avatars/" + (ws.User.Avatar == null ? "null" : ws.User.Avatar) + ".png";
+                                            <img src=@imgPath class="roundedImage"/>
+                                        }
+
+                                    </div>
+                               </li>
                                 i++;
                             }
                         }

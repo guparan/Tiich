@@ -18,6 +18,7 @@ namespace TiichDAL
         {
             this.Tag = new HashSet<Tag>();
             this.WatchedBy = new HashSet<User>();
+            this.Participants = new HashSet<User>();
         }
     
         public int ID { get; set; }
@@ -27,8 +28,6 @@ namespace TiichDAL
         public int PeopleMin { get; set; }
         public int PeopleMax { get; set; }
         public System.Data.Entity.Spatial.DbGeography Location { get; set; }
-        public Nullable<double> PriceMin { get; set; }
-        public Nullable<double> PriceMax { get; set; }
         public string Recurence { get; set; }
         public System.DateTime CreationDate { get; set; }
         public string Equipement { get; set; }
@@ -39,5 +38,6 @@ namespace TiichDAL
         public virtual User User { get; set; }
         public virtual ICollection<Tag> Tag { get; set; }
         public virtual ICollection<User> WatchedBy { get; set; }
+        public virtual ICollection<User> Participants { get; set; }
     }
 }
