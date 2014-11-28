@@ -27,34 +27,30 @@ namespace TiichRepository.Repository
 
                 if (!eh.hasErrors())
                 {
-                    
-                    List<Tag> dbTags = new List<Tag>();
-
+                    //Tags processing 
+                    List<Tag> tags = new List<Tag>();
                     foreach (var item in obj.Tag)
                     {
                         item.label = item.label.Trim();
                         Tag dbTag = context.Tag.Where(u => u.label.Equals(item.label)).FirstOrDefault();
+                        
                         if (dbTag != null)
                         {
-                            dbTags.Add(dbTag);
+                            tags.Add(dbTag);
+                            context.Entry(dbTag).State = EntityState.Modified;
+                            context.Tag.Attach(dbTag);
+                        }
+                        else
+                        {
+                            tags.Add(item);
                         }
                     }
 
-                    foreach (Tag tag in dbTags)
-                    {
-                        Tag olgTag = obj.Tag.Where(t => t.label.Equals(tag.label.Trim())).FirstOrDefault();
-                        obj.Tag.Remove(olgTag);
-                    }
+                    obj.Tag = tags;
 
-                    context.Workshop.Add(obj);
-                    //context.SaveChanges();
-
-                    //obj.Tag = dbTags;
-                    //context.Entry(obj).State = EntityState.Modified;
-
-                    //context.Workshop.Add(obj);
+                    //Saving
                     context.User.Attach(obj.User);
-                    
+                    context.Workshop.Add(obj);
                     context.SaveChanges();
                 }
             }
@@ -139,10 +135,10 @@ namespace TiichRepository.Repository
 
                         foreach (string term in terms)
                         {
-                            tags.AddRange(context.Tag.Where(t => t.label.Equals(term)));
+                            workshops.AddRange(context.Workshop.Include("User").Where(w =>
+                                w.Tag.Where(t => t.label.Trim().Equals(term)).FirstOrDefault() != null));
                         }
 
-                        tags.ForEach(t => workshops.AddRange(t.Workshop));
                         break;
                     default:
                         break;
