@@ -125,7 +125,7 @@ namespace TiichRepository.Repository
                             workshops = workshops.Where(w =>
                                 w.Label.Contains(terms.FirstOrDefault()) ||
                                 w.Details.Contains(terms.FirstOrDefault())
-                                ).ToList();
+                                ).ToList(); 
                             terms.Skip(1);
                         }
                         break;
@@ -162,7 +162,7 @@ namespace TiichRepository.Repository
                 User user = context.User.Where(u => u.ID == userID).FirstOrDefault();
                 Workshop workshop = context.Workshop.Where(u => u.ID == wsID).FirstOrDefault();
 
-                if(user.SeenWorkshop.Where(w => w.ID != wsID).FirstOrDefault() == null)
+                if(user.SeenWorkshop.Where(w => w.ID == wsID).FirstOrDefault() == null)
                 {
                     user.SeenWorkshop.Add(workshop);
                     context.SaveChanges();
@@ -186,6 +186,8 @@ namespace TiichRepository.Repository
 	            {
                     workshops.AddRange(tag.Workshop);
 	            }
+
+                workshops = workshops.Distinct().ToList();
 
                 return workshops;
             }

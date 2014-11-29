@@ -4,134 +4,137 @@
     bool edit = Model.Email.Trim().Equals(System.Security.Principal.GenericPrincipal.Current.Identity.Name) ? true : false;
 }
 
-<div class="col-lg-10 col-lg-offset-1">
-    <div class="panel panel-success">
-        <!-- User -->
-        <div class="panel-body">
-            <!-- Left col-->
-            <div class="col-lg-3">
-                @using (Html.BeginForm("EditAvatar", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    string imgPath = "/Content/Avatars/" + (Model.Avatar == null ? "null" : Model.Avatar) + ".png";
-                    <img src=@imgPath class="roundedImage" />
-                    <br />
-
-                    if (edit)
+<div class="container-padded">
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="panel panel-success">
+            <!-- User -->
+            <div class="panel-body">
+                <!-- Left col-->
+                <div class="col-lg-3">
+                    @using (Html.BeginForm("EditAvatar", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
-                        <div style="margin:auto;">
-                            <span class="btn btn-default btn-file">
-                                Choisir un fichier<input type="file" name="file">
-                            </span>
+                        string imgPath = "/Content/Avatars/" + (Model.Avatar == null ? "null" : Model.Avatar) + ".png";
+                        <img src=@imgPath class="roundedImage" />
+                        <br />
 
-                            <input type="hidden" value="@Model.ID" name="ID" />
-                            <input type="submit" />
+                        if (edit)
+                        {
+                            <div style="margin:auto;">
+                                <span class="btn btn-default btn-file">
+                                    Choisir un fichier<input type="file" name="file">
+                                </span>
 
+                                <input type="hidden" value="@Model.ID" name="ID" />
+                                <input type="submit" />
+
+                            </div>
+                        }
+                    }
+                </div>
+
+                <!-- Central col-->
+                <div class="col-lg-offset-1 col-lg-8">
+                    @using (Html.BeginForm("Account", "User", FormMethod.Post))
+                    {
+                        <input type="hidden" name="Email" value="@Model.Email" />
+            <!-- User form -->
+                        <div>
+                            <div class="form col-lg-12">
+                                <div class="form-group">
+                                    <div class="col-lg-3">
+                                        @if (edit)
+                                        {
+                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Prénom" })
+                                        }
+                                        else
+                                        {
+                                            <h4>@Model.FirstName</h4>
+                                        }
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @if (edit)
+                                        {
+                                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Nom" })
+                                        }
+                                        else
+                                        {
+                                            <h4>@Model.LastName</h4>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="col-lg-12">
+                                    <h4>@Model.Email</h4>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="col-lg-3">
+                                    @if (edit)
+                                    {
+                                        @Html.TextBoxFor(m => m.Birthday, new { type = "date", @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.Birthday</h4>
+                                    }
+                                </div>
+                                <div class="col-lg-3">
+                                    @if (edit)
+                                    {
+                                        @Html.TextBoxFor(m => m.Phone, new { type = "numeric", @class = "form-control", @placeholder = "Téléphone" })
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.Phone</h4>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="col-lg-12">
+                                    <h4>En quelque mots :</h4>
+                                </div>
+                                <div class="col-lg-8">
+                                    @if (edit)
+                                    {
+                                        @Html.TextAreaFor(m => m.Bio, new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        <p>@Model.Bio</p>
+                                    }
+                                </div>
+                                <div class="col-lg-12" style="margin-top:15px;">
+                                    <input type="submit" value="Mettre à jour" class="btn btn-primary" />
+                                </div>
+                            </div>
                         </div>
                     }
-                }
+
+                </div>
             </div>
 
-            <!-- Central col-->
-            <div class="col-lg-offset-1 col-lg-8">
-                @using (Html.BeginForm("Account", "User", FormMethod.Post))
-                {
-                    <input type="hidden" name="Email" value="@Model.Email" />
-            <!-- User form -->
-                    <div>
-                        <div class="form col-lg-12">
-                            <div class="form-group">
-                                <div class="col-lg-3">
-                                    @if (edit)
-                                    {
-                                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Prénom" })
-                                    }
-                                    else
-                                    {
-                                        <h4>@Model.FirstName</h4>
-                                    }
-                                </div>
-                                <div class="col-lg-3">
-                                    @if (edit)
-                                    {
-                                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Nom" })
-                                    }
-                                    else
-                                    {
-                                        <h4>@Model.LastName</h4>
-                                    }
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="col-lg-12">
-                                <h4>@Model.Email</h4>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="col-lg-3">
-                                @if (edit)
-                                {
-                                    @Html.TextBoxFor(m => m.Birthday, new { type = "date", @class = "form-control" })
-                                }
-                                else
-                                {
-                                    <h4>@Model.Birthday</h4>
-                                }
-                            </div>
-                            <div class="col-lg-3">
-                                @if (edit)
-                                {
-                                    @Html.TextBoxFor(m => m.Phone, new { type = "numeric", @class = "form-control", @placeholder = "Téléphone" })
-                                }
-                                else
-                                {
-                                    <h4>@Model.Phone</h4>
-                                }
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="col-lg-12">
-                                <h4>En quelque mots :</h4>
-                            </div>
-                            <div class="col-lg-8">
-                                @if (edit)
-                                {
-                                    @Html.TextAreaFor(m => m.Bio, new { @class = "form-control" })
-                                }
-                                else
-                                {
-                                    <p>@Model.Bio</p>
-                                }
-                            </div>
-                            <div class="col-lg-12" style="margin-top:15px;">
-                                <input type="submit" value="Mettre à jour" class="btn btn-primary" />
-                            </div>
-                        </div>
-                    </div>
-                }
-
+            <!-- My Workshops -->
+            <div id="MyWorkshops" class="panel-heading">
+                <h1>Mes ateliers</h1>
             </div>
-        </div>
-
-        <!-- My Workshops -->
-        <div id="MyWorkshops" class="panel-heading">
-            <h1>Mes ateliers</h1>   
-        </div>
-            @foreach(TiichDAL.Workshop ws in Model.Workshop)
+            @foreach (TiichDAL.Workshop ws in Model.Workshop)
             {
                 ws.User = Model;
             }
             @Html.Partial("~/Views/Workshop/Miniature.cshtml", Model.Workshop.ToList())
 
-        <!-- My Particip-->
-        <div id="MyParticipations" class="panel-heading">
-            <h1>Mes prochaines participations</h1>
-        </div>
+            <!-- My Particip-->
+            <div id="MyParticipations" class="panel-heading">
+                <h1>Mes prochaines participations</h1>
+            </div>
             @Html.Partial("~/Views/Workshop/Miniature.cshtml", Model.ParticipateAt.ToList())
+
+        </div>
 
     </div>
 </div>

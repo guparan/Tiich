@@ -7,6 +7,7 @@ using Tiich.ViewModels;
 using TiichDAL;
 using TiichService.Service;
 using Enums;
+using Utils;
 
 namespace Tiich.Controllers
 {
@@ -34,16 +35,10 @@ namespace Tiich.Controllers
 
                 //Recherche indirecte 
                 List<Workshop> indirectWS = service.IndirectSearch(research, ResearchEnums.ResearchOption.Or);
-
-                foreach (Workshop ws in directWS)
-	            {
-	                if(indirectWS.Contains(ws))
-	                    indirectWS.Remove(ws);
-	            }
-                
+                WorkshopHelper.Diff(indirectWS, directWS);
                 VMWorkshop indirect = new VMWorkshop()
                 {
-                    Category = "Recherche indirect",
+                    Category = "Résultat de la recherche",
                     Workshops = indirectWS
                 };
                 vm.VMWorshops.Add(indirect);
@@ -53,16 +48,8 @@ namespace Tiich.Controllers
                 {
                     List<Workshop> favoriteWS = service.FavoriteSearch(User.Identity.Name, research, ResearchEnums.ResearchOption.Or);
 
-                    foreach (Workshop ws in indirectWS)
-                    {
-                        if (favoriteWS.Contains(ws))
-                            favoriteWS.Remove(ws);
-                    }
-                    foreach (Workshop ws in directWS)
-                    {
-                        if (favoriteWS.Contains(ws))
-                            favoriteWS.Remove(ws);
-                    }
+                    WorkshopHelper.Diff(favoriteWS, directWS);
+                    WorkshopHelper.Diff(favoriteWS, indirectWS);
 
                     VMWorkshop favorite = new VMWorkshop()
                     {

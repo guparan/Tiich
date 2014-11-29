@@ -2,52 +2,78 @@
 
 @{
     ViewBag.Title = "Tiich";
+    string style = "headerwrap-full";
+    if (TempData["research"] != null)
+    {
+        style = "";
+    }
+    
+    bool fullHeader = TempData["research"] == null;
 }
 
-<div class="col-md-8 col-md-offset-2">
-    <div class="jumbotron">
-        <h1>Tiich</h1>
-
-
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
-        {
-            <div class="form-group">
-                <div class="col-sm-9">
-                    @Html.TextBox("research", 
-                    TempData["research"] != null ? TempData["research"] : String.Empty,
-                    new { @class = "form-control", @placeholder="Rechercher" })
-                </div>
-                <div class="">
-                    <input type="submit" class="btn btn-primary" name="runSimulation" value="Go !" />
-                </div>
-            </div>
-        }
-
-    </div>
-</div>
-<div class="col-md-8 col-md-offset-2">
-    
-    @{
-        if(Model.VMWorshops != null)
-        {
-            foreach(var vmws in Model.VMWorshops)
-            {
-                if(vmws.Workshops.Count != 0)
+<!-- Research-->
+@if(fullHeader)
+{
+    <div id="headerwrap" class="col-lg-12">
+        <img class="col-lg-6" src="~/Content/Images/logo.png" style="max-height:500px;"/>
+        <div class="col-lg-4" style="margin-top:auto;margin-bottom:auto;">
+            <div >
+                <h1>Découvrez ce qui se passe près de chez vous !</h1>
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
                 {
-                  <div class="panel panel-group" style="background-color: #EF6C00; ">
-                    <div class="panel-heading">
-
-                        <h3>@vmws.Category<span class="badge" style="float:right">@vmws.Workshops.Count</span></h3>
-                    </div>
-                    @if(vmws.Workshops != null)
-                    {
-                        @Html.Partial("~/Views/Workshop/Miniature.cshtml",vmws.Workshops)
-                    }
-                </div>
+                    @Html.TextBox("research",TempData["research"] != null ? TempData["research"] : String.Empty,new { @class = "form-control", @placeholder = "Rechercher" })
+                    <input type="submit" class="btn btn-warning btn-lg" name="runSimulation" value="Go !" />
                 }
-            }    
-        }
-        
+
+            </div>
+        </div>
+    </div>
+}
+    
+<!-- Results-->
+@{
+    style = !fullHeader ? "margin-top:150px;" : "";
+}
+<div class="container-padded" style="@style">
+
+    @if (!fullHeader)
+    {
+        <div class="searchPanel centered navbar navbar-fixed-top" style="">
+            <div class="navbar-brand centered">
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
+                {
+                    @Html.TextBox("research", TempData["research"] != null ? TempData["research"] : String.Empty, new { @class = "form-control", @placeholder = "Rechercher" })
+                    <input type="submit" class="btn btn-warning btn-lg" name="runSimulation" value="Go !" />
+                }
+
+            </div>
+        </div>
     }
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="">
+                @{
+                    if (Model.VMWorshops != null)
+                    {
+                        foreach (var vmws in Model.VMWorshops)
+                        {
+                            if (vmws.Workshops.Count != 0)
+                            {
+                                <div class="panel panel-group panel-custom">
+                                    <div class="panel-heading">
+
+                                        <h3>@vmws.Category<span class="badge" style="float:right">@vmws.Workshops.Count</span></h3>
+                                    </div>
+                                    @if (vmws.Workshops != null)
+                                    {
+                                        @Html.Partial("~/Views/Workshop/Miniature.cshtml", vmws.Workshops)
+                                    }
+                                </div>
+                            }
+                        }
+                    }
+
+                }
+            </div>
+        </div>
 
 </div>

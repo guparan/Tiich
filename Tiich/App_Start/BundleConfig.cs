@@ -38,6 +38,15 @@ namespace Tiich
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/BlackTie").Include(
+                "~/Content/BlackTie/css/bootstrap.css",
+                "~/Content/BlackTie/css/main.css",
+                "~/Content/BlackTie/fonts/glyphicons-halflings-regular.eot",
+                "~/Content/BlackTie/fonts/glyphicons-halflings-regular.swg",
+                "~/Content/BlackTie/fonts/glyphicons-halflings-regular.ttf",
+                "~/Content/BlackTie/fonts/glyphicons-halflings-regular.woff"
+                ));
         }
     }
 }

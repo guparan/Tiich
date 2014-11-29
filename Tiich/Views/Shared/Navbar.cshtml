@@ -1,34 +1,37 @@
-﻿<nav class="navbar navbar-default">
-    <div class="container-fluid">
+﻿<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
         <div class="navbar-header">
-            <img src="" />
-        </div>
-        <div class="" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Rechercher", "Index", "Home")</li>
-                <li>@Html.ActionLink("A propos", "Index", "About")</li>
 
-                @if(User.Identity.IsAuthenticated)
+            <a href="/" class=""><img src="~/Content/Images/logo_slim.png" /></a>
+        </div>
+        <div class="" id="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="">@Html.ActionLink("A propos", "Index", "About")</li>
+
+                @if (User.Identity.IsAuthenticated)
                 {
-                    <li>@Html.ActionLink("Proposer", "Create", "Workshop")</li>
+                    <li class="">
+                        <a href="/Workshop/Create">Proposer</a>
+                     </li>
                     TiichService.Service.UserService service = new TiichService.Service.UserService();
                     TiichDAL.User user = service.GetUserByName(User.Identity.Name);
                     string imgPath = "/Content/Avatars/" + (user.Avatar == null ? "null.png" : user.Avatar);
-                    
-                    <li>
-                        <a href="/User/Account" style="padding:5px;height:50px;" >
-                            <img src="@imgPath" class="roundedImage roundedImage-mini"/>
+
+                    <li class="">
+                        <a href="/User/Account" style="padding:5px;height:50px;">
+                            <img src="@imgPath" class="roundedImage roundedImage-mini" />
                         </a>
                     </li>
                 }
-                
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                @if(User.Identity.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="logOutButton">
-                        <a href="/User/LogOut" class="">
-                            <span class="glyphicon glyphicon-off " style="color: black;"></span>
+                    <li class="">
+
+                        <a href="/User/LogOut">
+                            <span class="glyphicon glyphicon-off " style="color: white;"></span>
                         </a>
                     </li>
 

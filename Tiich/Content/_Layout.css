@@ -1,4 +1,4 @@
-﻿body
+﻿.body
 {
     background-color:#FFA726;
 }
@@ -60,4 +60,45 @@ img.roundedImage.roundedImage-mini{
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.panel.panel-custom{
+    background-color:#4FC3F7;
+}
+
+.panel.panel-custom h3{
+    color:#424242;
+}
+
+.panel-heading{
+    border-radius:0;
+}
+
+div#headerwrap{
+    -moz-box-shadow: 0px 2px 3px 1px #656565;
+-webkit-box-shadow: 0px 2px 3px 1px #656565;
+-o-box-shadow: 0px 2px 3px 1px #656565;
+box-shadow: 0px 2px 3px 1px #656565;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=3);
+    height:100%;
+    margin-bottom:50px;
+}
+
+div.container-padded{
+    padding-top:50px;
+}
+
+div.navbar-header img{
+    height:50px;
+}
+
+div.searchPanel{
+    background-color : #BDBDBD;
+    padding:15px;
+    top:50px;
+    -moz-box-shadow: 0px 2px 3px 1px #656565;
+-webkit-box-shadow: 0px 2px 3px 1px #656565;
+-o-box-shadow: 0px 2px 3px 1px #656565;
+box-shadow: 0px 2px 3px 1px #656565;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=3);
 }

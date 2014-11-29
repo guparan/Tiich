@@ -1,16 +1,17 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
+<div class="container-padded">
+    <div class="col-lg-10 col-md-offset-1">
 
-<div class="col-lg-10 col-md-offset-1">
+        <div class="col-md-5 well">
+            <h1>Déjà membre ?</h1>
+            @Html.Partial("LogIn")
+        </div>
 
-    <div class="col-md-5 well">
-        <h1>Déjà membre ?</h1>
-        @Html.Partial("LogIn")
-    </div>
-
-    <div class="col-md-5 col-md-offset-1 well">
-        <h1>Inscris-toi !</h1>
-        @Html.Partial("SignIn")
+        <div class="col-md-5 col-md-offset-1 well">
+            <h1>Inscris-toi !</h1>
+            @Html.Partial("SignIn")
+        </div>
     </div>
 </div>
