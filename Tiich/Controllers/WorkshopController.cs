@@ -24,8 +24,17 @@ namespace Tiich.Controllers
             }
 
             if(User.Identity.IsAuthenticated)
+            {
                 TempData["UserID"] = userService.GetUserByName(User.Identity.Name).ID;
+            }
             
+            if(id != -1 && User.Identity.IsAuthenticated)
+            {
+                service.AddVisitorToWorkshop(TempData["UserID"].ToString(), id);
+                //int userID = int.Parse(TempData["UserID"]);
+                //if(userID != )
+            }
+        
             return View(ws);
         }
 
@@ -64,7 +73,23 @@ namespace Tiich.Controllers
         {
             int userID = int.Parse(Request["userID"]);
             int wsID = int.Parse(Request["workshopID"]);
-            return Create(wsID);
+
+            WorkshopService service = new WorkshopService();
+            service.AddParticipant(userID, wsID);
+
+            return RedirectToAction("Create", new { @id = wsID });
         }
+
+        public ActionResult UnParticipate()
+        {
+            int userID = int.Parse(Request["userID"]);
+            int wsID = int.Parse(Request["workshopID"]);
+
+            WorkshopService service = new WorkshopService();
+            service.RemoveParticipant(userID, wsID);
+
+            return RedirectToAction("Create", new { @id = wsID });
+        }
+        
     }
 }

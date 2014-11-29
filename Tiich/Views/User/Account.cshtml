@@ -119,29 +119,20 @@
 
         <!-- My Workshops -->
         <div id="MyWorkshops" class="panel-heading">
-            <h1>Mes ateliers</h1>
+            <h1>Mes ateliers</h1>   
         </div>
-        @foreach(TiichDAL.Workshop ws in Model.Workshop)
-        {
-         
-            <div class="panel-body">
-                <h3>
-                    @ws.Label
-                </h3>
-                <h4>
-                    @ws.Date
-                </h4>
-                <p>
-                    @ws.Details
-                </p>
-            </div>   
-        }
-
+            @foreach(TiichDAL.Workshop ws in Model.Workshop)
+            {
+                ws.User = Model;
+            }
+            @Html.Partial("~/Views/Workshop/Miniature.cshtml", Model.Workshop.ToList())
 
         <!-- My Particip-->
         <div id="MyParticipations" class="panel-heading">
             <h1>Mes prochaines participations</h1>
         </div>
+            @Html.Partial("~/Views/Workshop/Miniature.cshtml", Model.ParticipateAt.ToList())
+
     </div>
 </div>
 

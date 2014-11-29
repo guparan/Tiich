@@ -37,7 +37,8 @@ namespace Tiich.Controllers
             {
                 ViewBag.Message = "Error while uploading the files.";
             }
-            return Account(user.ID);
+            
+            return RedirectToAction("Account", new { user.ID });
         }
 
         public ActionResult Index()

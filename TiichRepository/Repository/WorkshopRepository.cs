@@ -175,7 +175,7 @@ namespace TiichRepository.Repository
             using(TiichEntities context = new TiichEntities())
             {
                 List<Workshop> workshops = new List<Workshop>();
-                List<Workshop> seenWS = context.User.Where(u => u.Email.Equals(email)).FirstOrDefault().SeenWorkshop.ToList();
+                List<Workshop> seenWS = context.User.Include(u => u.SeenWorkshop).Include("SeenWorkshop.User").Where(u => u.Email.Equals(email)).FirstOrDefault().SeenWorkshop.ToList();
                 List<Tag> favoriteTags = new List<Tag>();
                 foreach (Workshop ws in seenWS)
                 {
@@ -188,6 +188,30 @@ namespace TiichRepository.Repository
 	            }
 
                 return workshops;
+            }
+        }
+
+        public void AddParticpant(int userID, int wsID)
+        {
+            using(TiichEntities context = new TiichEntities())
+            {
+                User user = context.User.Find(userID);
+                Workshop ws = context.Workshop.Find(wsID);
+
+                user.ParticipateAt.Add(ws);
+                context.SaveChanges();
+            }
+        }
+
+        public void RemoveParticpant(int userID, int wsID)
+        {
+            using (TiichEntities context = new TiichEntities())
+            {
+                User user = context.User.Find(userID);
+                Workshop ws = context.Workshop.Find(wsID);
+
+                user.ParticipateAt.Remove(ws);
+                context.SaveChanges();
             }
         }
     }

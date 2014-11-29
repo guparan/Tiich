@@ -24,6 +24,8 @@ namespace TiichService.Service
             if(!String.IsNullOrEmpty(obj.Details))
                 textToProcess.AddRange(obj.Details.Split(separator).ToList());
             
+
+            //Word Extraction here
             List<string> relevantText = (textToProcess);
 
             //Tagg the rest 
@@ -31,6 +33,12 @@ namespace TiichService.Service
             List<Tag> tagList = new List<Tag>();
             
             //Tag the relevant words
+            foreach (string word in relevantText)
+            {
+                Tag tag = new Tag();
+                tag.label = word;
+                tagList.Add(tag);
+            }
 
             //tag with thesaurus
             foreach (string tagLabel in th.GetTags(relevantText))
@@ -83,6 +91,16 @@ namespace TiichService.Service
         public List<Workshop> FavoriteSearch(string email, string research, ResearchEnums.ResearchOption option)
         {
             return ((WorkshopRepository)_repo).FavoriteSearch(email, research, option);
+        }
+
+        public void AddParticipant(int userID, int wsID)
+        {
+            ((WorkshopRepository)_repo).AddParticpant(userID, wsID);
+        }
+
+        public void RemoveParticipant(int userID, int wsID)
+        {
+            ((WorkshopRepository)_repo).RemoveParticpant(userID, wsID);
         }
     }
 }

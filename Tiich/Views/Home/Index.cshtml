@@ -41,37 +41,7 @@
                     </div>
                     @if(vmws.Workshops != null)
                     {
-                        <ul class="list-group">
-
-                        @{
-                            int i = 0;
-                            foreach(var ws in vmws.Workshops)
-                            {
-                                string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
-                                
-                                <li class="panel-body list-group-item clickableList" style="@style" id="@ws.ID">
-                                    
-                                    <!-- Workshop -->
-                                    <div class="col-lg-9">
-                                        <h3>@ws.Label</h3>
-                                        <p>@ws.Details</p>
-                                        <p>@ws.Address</p>
-                                        <p>@ws.CreationDate</p>
-                                    </div>
-
-                                    <!-- User-->
-                                    <div class="col-lg-3">
-                                        @{
-                                            string imgPath = "/Content/Avatars/" + (ws.User.Avatar == null ? "null" : ws.User.Avatar) + ".png";
-                                            <img src=@imgPath class="roundedImage"/>
-                                        }
-
-                                    </div>
-                               </li>
-                                i++;
-                            }
-                        }
-                        </ul>
+                        @Html.Partial("~/Views/Workshop/Miniature.cshtml",vmws.Workshops)
                     }
                 </div>
                 }
@@ -81,12 +51,3 @@
     }
 
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".clickableList").click(function (obj) {
-            var id = $(this).attr('id');
-            window.location.replace("/Workshop/Create/" + id);
-        })
-    })
-</script>

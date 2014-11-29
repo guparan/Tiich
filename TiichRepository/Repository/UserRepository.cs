@@ -40,7 +40,7 @@ namespace TiichRepository.Repository
         {
             using (TiichEntities context = new TiichEntities())
             {
-                User user = context.User.Include("Workshop").Include("ParticipateAt").Where(u => u.Email.Equals(p)).FirstOrDefault();
+                User user = context.User.Include("Workshop").Include("ParticipateAt").Include("ParticipateAt.User").Where(u => u.Email.Equals(p)).FirstOrDefault();
                 return user;
             }
         }
