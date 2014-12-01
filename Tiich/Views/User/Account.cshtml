@@ -41,7 +41,7 @@
                         <div>
                             <div class="form col-lg-12">
                                 <div class="form-group">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         @if (edit)
                                         {
                                             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Prénom" })
@@ -51,7 +51,7 @@
                                             <h4>@Model.FirstName</h4>
                                         }
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4 col-lg-offset-1">
                                         @if (edit)
                                         {
                                             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Nom" })
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="col-lg-12">
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     @if (edit)
                                     {
                                         @Html.TextBoxFor(m => m.Birthday, new { type = "date", @class = "form-control" })
@@ -82,7 +82,7 @@
                                         <h4>@Model.Birthday</h4>
                                     }
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4 col-lg-offset-1">
                                     @if (edit)
                                     {
                                         @Html.TextBoxFor(m => m.Phone, new { type = "numeric", @class = "form-control", @placeholder = "Téléphone" })
@@ -98,19 +98,21 @@
                                 <div class="col-lg-12">
                                     <h4>En quelque mots :</h4>
                                 </div>
-                                <div class="col-lg-8">
+                                <div class="col-lg-12">
                                     @if (edit)
                                     {
-                                        @Html.TextAreaFor(m => m.Bio, new { @class = "form-control" })
+                                        @Html.TextAreaFor(m => m.Bio, new { @class = "form-control", @style="width:100%;" })
                                     }
                                     else
                                     {
                                         <p>@Model.Bio</p>
                                     }
                                 </div>
-                                <div class="col-lg-12" style="margin-top:15px;">
-                                    <input type="submit" value="Mettre à jour" class="btn btn-primary" />
-                                </div>
+                                @if(edit) {
+                                    <div class="col-lg-12" style="margin-top:15px;">
+                                        <input type="submit" value="Mettre à jour" class="btn btn-primary" />
+                                    </div>
+                                }
                             </div>
                         </div>
                     }

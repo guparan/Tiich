@@ -70,7 +70,7 @@
                             <div class="col-lg-6">
                                 @if (edit)
                                 {
-                                    @Html.TextBox("address", Model.Address, new { @placeholder = "Nowhere" })
+                                    @Html.TextBox("address", Model.Address, new { @placeholder = "Nowhere"})
                                 }
                                 else
                                 {
@@ -204,5 +204,11 @@
         document.getElementById("range").innerHTML = newValue;
     }
     $(document).ready(function () {
+        $("#address").addClass("form-control");
+        $("#address").keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+            }
+        })
     });
 </script>

@@ -106,11 +106,17 @@ namespace Tiich.Controllers
         {
             UserService service = new UserService();
             User user = new User();
-            if (User.Identity.IsAuthenticated)
-                user = service.GetUserByName(User.Identity.Name);
+           
+            if(id == -1)
+            {
+                if (User.Identity.IsAuthenticated)
+                    user = service.GetUserByName(User.Identity.Name);
+            }
             else
-                user = null;
-
+            {
+                user = service.GetUser(id);
+            }
+            
             return View(user);
         }
 

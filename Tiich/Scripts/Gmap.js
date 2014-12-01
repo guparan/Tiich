@@ -1,20 +1,12 @@
 ﻿var coords;
 
-function DefaultPlacement() {
-    var res = 
-
-    alert("ok2");
-    alert(res);
-    return res;
-}
-
 function SearchBox(map)
 {
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */(
         document.getElementById('location'));
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    alert(google.maps.places);
+
     var searchBox = new google.maps.places.SearchBox(
       /** @type {HTMLInputElement} */(input));
 
@@ -32,25 +24,42 @@ function SearchBox(map)
 }
 
 function GetLocation(location) {
-    //alert(location.coords.latitude);
-    //alert(location.coords.longitude);
-    //alert(location.coords.accuracy);
     coords = location.coords;
-    //alert(coords);
+
 }
 
 function initialize() {
 
-    navigator.geolocation.getCurrentPosition(GetLocation);
-    //alert(coords);
+    //Initialisation
     var markers = [];
     var map = new google.maps.Map(document.getElementById('map'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
+    //Default placement
+    var defaultBound;
+    navigator.geolocation.getCurrentPosition(GetLocation, defaultBound);
+
     var defaultBounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(-33.8902, 151.1759),
         new google.maps.LatLng(-33.8474, 151.2631));
+
+    // Try W3C Geolocation (Preferred)
+    if (navigator.geolocation) {
+        browserSupportFlag = true;
+        navigator.geolocation.getCurrentPosition(function (position) {
+            initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            map.setCenter(initialLocation);
+        }, function () {
+            handleNoGeolocation(browserSupportFlag);
+        });
+    }
+        // Browser doesn't support Geolocation
+    else {
+        browserSupportFlag = false;
+        handleNoGeolocation(browserSupportFlag);
+    }
+
     map.fitBounds(defaultBounds);
 
     // Create the search box and link it to the UI element.
@@ -100,7 +109,10 @@ function initialize() {
             var coord = place.geometry.location;
             $("#Location").val(coord);
         }
+
         map.fitBounds(bounds);
+        map.setZoom(18);
+
     });
     // [END region_getplaces]
 

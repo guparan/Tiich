@@ -44,5 +44,13 @@ namespace TiichRepository.Repository
                 return user;
             }
         }
+
+        public User GetUser(int id)
+        {
+            using (TiichEntities context = new TiichEntities())
+            {
+                return context.User.Include("Workshop").Include("ParticipateAt").Include("ParticipateAt.User").Where(u => u.ID == id).FirstOrDefault();
+            }
+        }
     }
 }

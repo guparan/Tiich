@@ -74,18 +74,21 @@ img.roundedImage.roundedImage-mini{
     border-radius:0;
 }
 
-div#headerwrap{
+.boxShadow{
     -moz-box-shadow: 0px 2px 3px 1px #656565;
--webkit-box-shadow: 0px 2px 3px 1px #656565;
--o-box-shadow: 0px 2px 3px 1px #656565;
-box-shadow: 0px 2px 3px 1px #656565;
-filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=3);
-    height:100%;
+    -webkit-box-shadow: 0px 2px 3px 1px #656565;
+    -o-box-shadow: 0px 2px 3px 1px #656565;
+    box-shadow: 0px 2px 3px 1px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=3);
+}
+
+div#headerwrap{
+    height:110%;
     margin-bottom:50px;
 }
 
 div.container-padded{
-    padding-top:50px;
+    padding-top:100px;
 }
 
 div.navbar-header img{
@@ -96,9 +99,4 @@ div.searchPanel{
     background-color : #BDBDBD;
     padding:15px;
     top:50px;
-    -moz-box-shadow: 0px 2px 3px 1px #656565;
--webkit-box-shadow: 0px 2px 3px 1px #656565;
--o-box-shadow: 0px 2px 3px 1px #656565;
-box-shadow: 0px 2px 3px 1px #656565;
-filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=3);
 }

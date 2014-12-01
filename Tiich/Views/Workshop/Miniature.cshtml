@@ -20,10 +20,14 @@
 
                 <!-- User-->
                 <div class="col-lg-3">
-                    @{
-                        string imgPath = "/Content/Avatars/" + (ws.User.Avatar == null ? "null" : ws.User.Avatar) + ".png";
-                        <img src=@imgPath class="roundedImage" />
-                    }
+                   
+                        <a href="User/Account/@ws.UserID">
+                        @{
+
+                             string imgPath = "/Content/Avatars/" + (ws.User.Avatar == null ? "null" : ws.User.Avatar) + ".png";
+                             <img src=@imgPath class="roundedImage" />
+                        }
+                        </a>
 
                 </div>
             </li>
