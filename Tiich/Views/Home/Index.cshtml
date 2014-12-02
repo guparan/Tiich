@@ -54,24 +54,8 @@
                 @{
                     if (Model.VMWorshops != null)
                     {
-                        foreach (var vmws in Model.VMWorshops)
-                        {
-                            if (vmws.Workshops.Count != 0)
-                            {
-                                <div class="panel panel-group panel-custom">
-                                    <div class="panel-heading">
-
-                                        <h3>@vmws.Category<span class="badge" style="float:right">@vmws.Workshops.Count</span></h3>
-                                    </div>
-                                    @if (vmws.Workshops != null)
-                                    {
-                                        @Html.Partial("~/Views/Workshop/Miniature.cshtml", vmws.Workshops)
-                                    }
-                                </div>
-                            }
-                        }
+                        @Html.Partial("~/Views/Workshop/Miniature.cshtml", Model.VMWorshops)
                     }
-
                 }
             </div>
         </div>

@@ -184,7 +184,9 @@ namespace TiichRepository.Repository
 
                 foreach (Tag tag in favoriteTags)
 	            {
-                    workshops.AddRange(tag.Workshop);
+                    List<Tag> list = context.Tag.Include("Workshop.User").Where(t => t.ID == tag.ID).ToList();
+                    list.ForEach(t => workshops.AddRange(t.Workshop));
+                    //workshops.AddRange(tag.Workshop);
 	            }
 
                 workshops = workshops.Distinct().ToList();

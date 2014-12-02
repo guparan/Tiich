@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="~/Content/Bootstrap/js/bootstrap.min.js"></script>
 
     @Styles.Render("~/Content/_Layout.css")
     @Styles.Render("~/Content/Gmap.css")
@@ -14,15 +15,31 @@
     @Styles.Render("~/Content/BlackTie")
 </head>
 <body>
+    
 
     @Html.Partial("Navbar")
     @Html.Partial("Errors")
     @Html.Partial("SuccessMessage")
-    
+
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 
     @RenderBody()
 
+    <script type="text/javascript">
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            //setTimeout($("#ErrorModal").remove(), 2000);
+            //setTimeout($("#SuccesModal").remove(), 2000);
+        });
+    </script>
 </body>
 </html>
