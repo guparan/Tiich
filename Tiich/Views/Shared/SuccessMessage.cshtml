@@ -2,13 +2,25 @@
 {
     if (!String.IsNullOrEmpty(TempData["success"].ToString()))
     {
-        <div>
-            <div class="col-lg-offset-1 col-lg-10">
+        <div class="modal fade in visible-lg"  id="SuccesModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        @TempData["success"]
+                        <button type="button" id="closeError" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
 
-                <div class="alert alert-success">
-                    @TempData["success"]
-                </div>
-            </div>
-        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#closeError").click(function () {
+                    $("#SuccesModal").remove();
+                })
+            })
+        
+        </script>
     }
 }

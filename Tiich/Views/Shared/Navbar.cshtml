@@ -29,22 +29,55 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="">
-
-                        <a href="/User/LogOut">
-                            <span class="glyphicon glyphicon-off " style="color: white;"></span>
+                        <a href="/User/LogOut" class="btn btn-danger btn-lg">
+                            Déconnexion
                         </a>
                     </li>
-
                 }
                 else
                 {
                     <li class="logInButton">
-                        <a href="/User/Index" class=" ">
-                            <span class="glyphicon glyphicon-off " style="color: black;"></span>
-                        </a>
+
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#connexion">
+                            Connexion
+                        </button>
+
+                        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#inscription">
+                            Inscription
+                        </button>
                     </li>
                 }
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="connexion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+                <h4 class="modal-title" id="myModalLabel">Connexion</h4>
+            </div>
+            <div class="modal-body">
+                    @Html.Partial("~/Views/User/LogIn.cshtml", new TiichDAL.User())
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="inscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+                <h4 class="modal-title" id="myModalLabel">Connexion</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("~/Views/User/SignIn.cshtml", new TiichDAL.User())
+            </div>
+        </div>
+    </div>
+</div>

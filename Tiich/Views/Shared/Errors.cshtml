@@ -1,8 +1,29 @@
 ﻿
-@if(TempData["errors"] != null)
+@if (TempData["errors"] != null)
 {
-    if(!String.IsNullOrEmpty(TempData["errors"].ToString()))
+    if (!String.IsNullOrEmpty(TempData["errors"].ToString()))
     {
+        <div class="modal fade in visible-lg  " id="ErrorModal">
+            <div class="modal-dialog ">
+                <div class="modal-content alert alert-danger">
+                    <div class="modal-body">
+                        <span class="glyphicon glyphicon-warning-sign "></span>
+                        @TempData["errors"]
+                        <button type="button" id="closeError" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#closeError").click(function () {
+                    $("#ErrorModal").remove();
+                })
+            })
+        
+        </script>
         <div>
             <div class="col-lg-offset-1 col-lg-10">
 
