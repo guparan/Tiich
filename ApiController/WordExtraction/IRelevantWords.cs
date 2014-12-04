@@ -8,6 +8,8 @@ namespace ApiController.WordExtraction
 {
     public interface IRelevantWords
     {
+        List<string> Extract(string text);
+
         List<string> Extract(List<string> lString);
     }
 }
