@@ -134,6 +134,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ModerationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WorkshopController.cs" />
     <Compile Include="Global.asax.cs">
@@ -177,8 +178,10 @@
     <Content Include="Content\Bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\Bootstrap\js\npm.js" />
     <Content Include="Content\Gmap.css" />
+    <Content Include="Content\Images\loader.gif" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo_slim.png" />
+    <Content Include="Content\Images\pie.png" />
     <Content Include="Content\Images\stickers-onoff.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -309,6 +312,9 @@
     <Content Include="Views\Shared\SuccessMessage.cshtml" />
     <Content Include="Views\User\Account.cshtml" />
     <Content Include="Views\Workshop\Miniature.cshtml" />
+    <Content Include="Views\Moderation\Index.cshtml" />
+    <Content Include="Views\Moderation\PartialAjaxTest.cshtml" />
+    <Content Include="Views\Moderation\GlobalTagsStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

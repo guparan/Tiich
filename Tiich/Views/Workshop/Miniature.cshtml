@@ -1,56 +1,60 @@
 ﻿@model List<Tiich.ViewModels.VMWorkshop>
 
-@foreach(var vm in Model)
-{
-    int index = 0;
-    if(vm.Workshops != null)
+@{
+    int index = 0;   
+    
+    foreach(var vm in Model)
     {
-        if(vm.Workshops.Count != 0)
+        if(vm.Workshops != null)
         {
-            <div class="panel panel-group panel-custom">
-                <div class="panel-heading wraper" role="tab" id=@index >
-                    <h3>
-                            @vm.Category<span class="badge" style="float:right">@vm.Workshops.Count</span>
-                    </h3>
+            if(vm.Workshops.Count != 0)
+            {
+                <div class="panel panel-group panel-custom">
+                    <div class="panel-heading wraper" role="tab" id=@index >
+                        <h3>
+                                @vm.Category<span class="badge" style="float:right">@vm.Workshops.Count</span>
+                        </h3>
+                    </div>
+                     <ul class="list-group" id=@("content" + index)>
+                            @{
+                            int i = 0;
+                            foreach (var ws in vm.Workshops)
+                            {
+                                string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
+
+                        <li class="panel-body list-group-item clickableList" style="@style" id="@ws.ID">
+
+                            <!-- Workshop -->
+                            <div class="col-lg-9">
+                                <h3>@ws.Label.Trim()</h3>
+                                <p>@ws.Details</p>
+                                <p>@ws.Address</p>
+                                <p>@ws.CreationDate</p>
+                            </div>
+
+                            <!-- User-->
+                            <div class="col-lg-3">
+
+                                <a href="User/Account/@ws.UserID">
+                                    @{
+
+                                string imgPath = "/Content/Avatars/" + (ws.User.Avatar == null ? "null" : ws.User.Avatar) + ".png";
+                                            <img src=@imgPath class="roundedImage" />
+                                    }
+                                </a>
+
+                            </div>
+                        </li>
+                                i++;
+                            }
+                            }
+                        </ul>
                 </div>
-                 <ul class="list-group" id=@("content" + index)>
-                        @{
-                        int i = 0;
-                        foreach (var ws in vm.Workshops)
-                        {
-                            string style = i % 2 == 1 ? "background-color:#EEEEEE;" : "";
-
-                    <li class="panel-body list-group-item clickableList" style="@style" id="@ws.ID">
-
-                        <!-- Workshop -->
-                        <div class="col-lg-9">
-                            <h3>@ws.Label.Trim()</h3>
-                            <p>@ws.Details</p>
-                            <p>@ws.Address</p>
-                            <p>@ws.CreationDate</p>
-                        </div>
-
-                        <!-- User-->
-                        <div class="col-lg-3">
-
-                            <a href="User/Account/@ws.UserID">
-                                @{
-
-                            string imgPath = "/Content/Avatars/" + (ws.User.Avatar == null ? "null" : ws.User.Avatar) + ".png";
-                                        <img src=@imgPath class="roundedImage" />
-                                }
-                            </a>
-
-                        </div>
-                    </li>
-                            i++;
-                        }
-                        }
-                    </ul>
-            </div>
+            }
         }
-    }
     index++;
+}
+
 }
 
 

@@ -121,21 +121,25 @@
             </div>
 
             <!-- My Workshops -->
-            <div id="MyWorkshops" class="panel-heading">
-                <h1>Mes ateliers</h1>
-            </div>
-            @foreach (TiichDAL.Workshop ws in Model.Workshop)
-            {
-                ws.User = Model;
+            @{
+                List<Tiich.ViewModels.VMWorkshop> list = new List<Tiich.ViewModels.VMWorkshop>();
+                Tiich.ViewModels.VMWorkshop vmMy = new Tiich.ViewModels.VMWorkshop()
+                {
+                    Category = "Mes ateliers",
+                    Workshops = Model.Workshop.ToList()
+                };
+
+                Tiich.ViewModels.VMWorkshop vmPart = new Tiich.ViewModels.VMWorkshop()
+                {
+                    Category = "Mes prochaines participations",
+                    Workshops = Model.ParticipateAt.ToList()
+                };
+                
+                list.Add(vmMy);
+                list.Add(vmPart);
+                
+                @Html.Partial("~/Views/Workshop/Miniature.cshtml", list)
             }
-            @Html.Partial("~/Views/Workshop/Miniature.cshtml", Model.Workshop.ToList())
-
-            <!-- My Particip-->
-            <div id="MyParticipations" class="panel-heading">
-                <h1>Mes prochaines participations</h1>
-            </div>
-            @Html.Partial("~/Views/Workshop/Miniature.cshtml", Model.ParticipateAt.ToList())
-
         </div>
 
     </div>

@@ -1,0 +1,35 @@
+﻿<div class="container-padded">
+
+    <!-- Pie chart div -->
+    <div id="pieChartDiv" class="col-lg-6 col-lg-offset-1">
+        <img src="~/Content/Images/loader.gif" />
+    </div>
+
+    <!-- Right col-->
+    <div class="col-lg-5">
+        
+        <!-- most viewed-->
+        <div>
+
+        </div>
+
+        <!-- Workshop -->
+        <div>
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //Call global stats
+        $.ajax({
+                    url: "GlobalTagsStatistics",
+                })
+             .done(function (data) {
+              $("#pieChartDiv").html(data);
+          });
+    });
+    //$("#ajax").load("/Moderation/PartialAjaxTest/?text=tets");
+</script>
