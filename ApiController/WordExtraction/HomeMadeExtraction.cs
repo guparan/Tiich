@@ -20,8 +20,9 @@ namespace ApiController.WordExtraction
             // Loading POS Tagger
             try
             {
-                string cheminFrench = @"C:\Users\Eleonore\Source\Repos\Tiich\ApiController\WordExtraction\Dictionnary\french.tagger";
-
+                string root = System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+                root = AppDomain.CurrentDomain.BaseDirectory;
+                string cheminFrench = root + @"..\ApiController\WordExtraction\Dictionnary\french.tagger";
                 var tagger = new edu.stanford.nlp.tagger.maxent.MaxentTagger(cheminFrench);
                 //var tagger = new edu.stanford.nlp.tagger.maxent.MaxentTagger(edu.stanford.nlp.tagger.maxent.MaxentTagger.DEFAULT_NLP_GROUP_MODEL_PATH+@"\french.tagger");
                 
@@ -51,22 +52,6 @@ namespace ApiController.WordExtraction
             return keywords;
 
             //throw new NotImplementedException();
-        }
-
-        private static string RemoveSpecialCaracters(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<string> Extract(List<string> lString)
-        {
-            List<string> res = new List<string>();
-            foreach (string s in lString)
-            {
-                //if(!)
-                res.AddRange(Extract(s));
-            }
-            return res;
         }
     }
 }

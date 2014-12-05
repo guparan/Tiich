@@ -27,8 +27,8 @@ namespace TiichService.Service
 
             //Word Extraction here
             //List<string> relevantText = (textToProcess);
-            List<string> relevantText = extractor.Extract(obj.Label.ToString());
-
+            List<string> relevantText = extractor.Extract(obj.Label.ToString() + " " + obj.Details.ToString());
+            
 
             //Tagg the rest 
             ThesaurusAltervista th = new ThesaurusAltervista();
