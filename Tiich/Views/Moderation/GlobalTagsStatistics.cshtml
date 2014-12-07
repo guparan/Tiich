@@ -1,1 +1,90 @@
-﻿<h1>Global stats</h1>
+﻿@model Tiich.ViewModels.VMTagsStatistics
+
+<style type="text/css">
+    div.legend-span {
+        width: 20px;
+        height: 20px;
+        border-radius: 50px;
+        font-size: 20px;
+        color: #fff;
+        line-height: 100px;
+        text-align: center;
+        display: inline-block;
+        background: #000;
+    }
+
+    div.legend-text{
+        display:inline-block;
+        padding:5px;
+        padding:auto;
+        margin:auto;
+        height:100%;
+    }
+
+    ul{
+        list-style:none;
+    }
+</style>
+<div id="chartValues">
+    @{
+        int i = 0;       
+        foreach (var tagCount in Model.Tags)
+        {
+            string keyIndex = "chart_key" + i;
+            string valueIndex = "chart_val" + i;
+    
+            <input id="@keyIndex" type="hidden" value="@tagCount.Tag.label.Trim()"/>
+            <input id="@valueIndex" type="hidden" value="@tagCount.Count"/>
+            i++;
+        } 
+        <input id="chart_lastindex" value="@i" type="hidden"/>
+    }
+    
+
+</div>
+
+<h1>Global stats</h1>
+
+<script src="~/Scripts/Chart/Chart.min.js"></script>
+<script src="~/Scripts/Chart/ColorList.js"></script>
+<!-- pie chart tests -->
+<div id="canvas-holder">
+
+    <canvas id="chart-area" width="500" height="300" class="col-lg-8"/>
+    <div class="col-lg-4">
+        <ul id="chart-legend">
+
+        </ul>
+    </div>
+</div>
+<script>
+
+
+    var nbTags = $("#chart_lastindex").val();
+    var data = [];
+    for (var i = 0; i < nbTags; i++) {
+        var key = ($("#chart_key" + i).val());
+        var val = (parseInt($("#chart_val" + i).val()));
+        var row = {
+            value: val,
+            color: COLOURS[i % (COLOURS.length)].color,
+            highlight: COLOURS[i % (COLOURS.length)].highlight,
+            label: key,
+            labelColor: 'white',
+            labelFontSize: '16'
+        };
+        //data.push(row)
+
+        data.push(row);
+    }
+
+    var options = [];
+    var ctx = document.getElementById("chart-area").getContext("2d");
+    window.myPie = new Chart(ctx).Pie(data, options);
+
+    for (var i = 0; i < data.length; i++) {
+        var row = "<li class='legend'><div class='legend-span' style=\"background-color:" + data[i].color + "\"></div><div class='legend-text'>" + data[i].label + "</div></li>";
+        $("#chart-legend").append(row);
+    }
+</script>
+

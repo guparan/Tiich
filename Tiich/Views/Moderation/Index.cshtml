@@ -1,8 +1,10 @@
 ﻿<div class="container-padded">
 
     <!-- Pie chart div -->
-    <div id="pieChartDiv" class="col-lg-6 col-lg-offset-1">
-        <img src="~/Content/Images/loader.gif" />
+    <div id="pieChartDiv" class="col-lg-7 well">
+        <div id="tagsStatistics">
+            <img src="~/Content/Images/loader.gif" />
+        </div>
     </div>
 
     <!-- Right col-->
@@ -28,7 +30,7 @@
                     url: "GlobalTagsStatistics",
                 })
              .done(function (data) {
-              $("#pieChartDiv").html(data);
+                 $("#tagsStatistics").html(data);
           });
     });
     //$("#ajax").load("/Moderation/PartialAjaxTest/?text=tets");

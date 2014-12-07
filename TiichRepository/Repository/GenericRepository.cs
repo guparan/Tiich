@@ -70,5 +70,28 @@ namespace TiichRepository.Repository
                 return dbUser != null;
             }
         }
+
+        public List<T> GetAll(int taken = -1, List<string> toInclude = null)
+        {
+            using(TiichEntities context = new TiichEntities())
+            {
+                IQueryable<T> query = context.Set<T>();
+
+                if(toInclude != null)
+                {
+                    foreach (string inc in toInclude)
+                    {
+                        query.Include(inc);
+                    }
+                }
+
+                if(taken != -1)
+                {
+                    query.Take(taken);
+                }
+
+                return query.ToList();
+            }
+        }
     }
 }

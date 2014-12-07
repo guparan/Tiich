@@ -39,5 +39,11 @@ namespace TiichService.Service
         {
             // rien de generic
         }
+
+
+        public List<T> GetAll(int taken = -1, List<string> toInclude = null)
+        {
+            return _repo.GetAll(taken, toInclude);
+        }
     }
 }

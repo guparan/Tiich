@@ -13,5 +13,7 @@ namespace TiichService.Interface
         void Edit(T obj, ErrorHandler eh);
         void Delete(int id, ErrorHandler eh);
         void GenericTests(T obj, ErrorHandler eh);
+
+        List<T> GetAll(int taken = -1,List<string> toInclude = null);
     }
 }
