@@ -218,5 +218,21 @@ namespace TiichRepository.Repository
                 context.SaveChanges();
             }
         }
+
+        public List<Workshop> GetTopViewed(int p)
+        {
+            using(TiichEntities context = new TiichEntities())
+            {
+                return context.Workshop.OrderByDescending(w => w.WatchedBy.Count).Take(p).ToList();
+            }
+        }
+
+        public List<Workshop> GetFlopViewed(int p)
+        {
+            using (TiichEntities context = new TiichEntities())
+            {
+                return context.Workshop.OrderBy(w => w.WatchedBy.Count).Take(p).ToList();
+            }
+        }
     }
 }

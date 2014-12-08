@@ -786,6 +786,8 @@
     <Content Include="Views\Moderation\Index.cshtml" />
     <Content Include="Views\Moderation\PartialAjaxTest.cshtml" />
     <Content Include="Views\Moderation\GlobalTagsStatistics.cshtml" />
+    <Content Include="Views\Moderation\TopAndFlopWorkshops.cshtml" />
+    <Content Include="Views\Moderation\GetCommonWords.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,8 +11,8 @@
     <div class="col-lg-5">
         
         <!-- most viewed-->
-        <div>
-
+        <div id="topAndFlopWorkshops" class="well col-lg-12">
+            <img src="~/Content/Images/loader.gif" />
         </div>
 
         <!-- Workshop -->
@@ -31,7 +31,15 @@
                 })
              .done(function (data) {
                  $("#tagsStatistics").html(data);
-          });
+             });
+
+        //Call most and less viewed worksops
+        $.ajax({
+            url: "TopAndFlopWorkshops",
+        })
+             .done(function (data) {
+                 $("#topAndFlopWorkshops").html(data);
+             });
     });
     //$("#ajax").load("/Moderation/PartialAjaxTest/?text=tets");
 </script>

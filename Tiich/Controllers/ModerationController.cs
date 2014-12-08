@@ -38,5 +38,23 @@ namespace Tiich.Controllers
 
             return View(vm);
         }
+
+        public ActionResult TopAndFlopWorkshops()
+        {
+            WorkshopService service = new WorkshopService();
+            List<Workshop> workshops = new List<Workshop>();
+
+            workshops.AddRange(service.GetTopViewed(5).ToList());
+            workshops.AddRange(service.GetFlopViewed(5).ToList());
+
+            return View(workshops);
+        }
+
+        public ActionResult GetCommonWords(string tag)
+        {
+            List<string> words = new List<string>();
+
+            return View(words);
+        }
     }
 }

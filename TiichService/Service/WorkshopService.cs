@@ -104,5 +104,15 @@ namespace TiichService.Service
         {
             ((WorkshopRepository)_repo).RemoveParticpant(userID, wsID);
         }
+
+        public List<Workshop> GetTopViewed(int p)
+        {
+            return ((WorkshopRepository)_repo).GetTopViewed(p);
+        }
+
+        public List<Workshop> GetFlopViewed(int p)
+        {
+            return ((WorkshopRepository)_repo).GetFlopViewed(p);
+        }
     }
 }
