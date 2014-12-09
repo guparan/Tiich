@@ -64,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApiController\ApiController.csproj">
+      <Project>{5ffd685b-0f6d-479d-9256-6e5eed1a8055}</Project>
+      <Name>ApiController</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Enums\Enums.csproj">
       <Project>{46c6e2f0-4edb-4cc2-bce7-e9078511d25d}</Project>
       <Name>Enums</Name>

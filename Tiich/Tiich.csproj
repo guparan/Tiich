@@ -220,6 +220,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\VMSearchResultDisplay.cs" />
+    <Compile Include="ViewModels\VMTagManager.cs" />
     <Compile Include="ViewModels\VMTagsStatistics.cs" />
     <Compile Include="ViewModels\VMWorkshop.cs" />
   </ItemGroup>

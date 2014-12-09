@@ -234,5 +234,47 @@ namespace TiichRepository.Repository
                 return context.Workshop.OrderBy(w => w.WatchedBy.Count).Take(p).ToList();
             }
         }
+
+        public Tag GetByLabel(string label)
+        {
+            using(TiichEntities context = new TiichEntities())
+            {
+                return context.Tag.Where(t => t.label.Trim().ToLower().Equals(label.ToLower())).FirstOrDefault();
+            }
+        }
+
+        public void Update(Workshop w, List<Tag> tags)
+        {
+            using(TiichEntities context = new TiichEntities())
+            {
+                //Clean
+                Workshop oldWorkshop = context.Workshop.Find(w.ID);
+                List<Tag> oldTags = oldWorkshop.Tag.ToList();
+
+                foreach (Tag t in oldTags)
+                {
+                    oldWorkshop.Tag.Remove(t);
+                }
+
+                context.SaveChanges();
+
+                List<Tag> ts = new List<Tag>();
+                foreach (Tag t in tags)
+                {
+                    ts.Add(context.Tag.Where(ta => ta.label.Trim().ToLower().Equals(t.label.ToLower().Trim())).FirstOrDefault());
+                }
+
+                w.Tag = ts;
+                foreach (Tag t in ts)
+                {
+                    context.Tag.Attach(t);
+                }
+
+                oldWorkshop.Tag = ts;
+
+                context.Entry(oldWorkshop).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
     }
 }

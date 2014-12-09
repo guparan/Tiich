@@ -24,5 +24,20 @@ namespace TiichService.Service
         {
             return ((TagRepository)_repo).GetMostUsed(toTake);
         }
+
+        public List<Tag>[] GetCommonWords(string tag)
+        {
+            return ((TagRepository)_repo).GetCommonWords(tag);
+        }
+
+        public void SetTags(List<int> tags, bool activate)
+        {
+            ((TagRepository)_repo).SetTags(tags,activate);
+        }
+
+        public List<Workshop> GetWorkshopsFromTags(List<int> directIDS)
+        {
+            return ((TagRepository)_repo).GetWorkshopsFromTags(directIDS);
+        }
     }
 }

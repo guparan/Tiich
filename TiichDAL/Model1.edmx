@@ -38,6 +38,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="parentId" Type="int" />
           <Property Name="label" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="activate" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -246,6 +247,7 @@
           <Property Name="parentId" Type="Int32" />
           <Property Name="label" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Workshop" Relationship="TiichModel.WorkshopTags" FromRole="Tag" ToRole="Workshop" />
+          <Property Name="activate" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -346,6 +348,7 @@
           <EntitySetMapping Name="Tag">
             <EntityTypeMapping TypeName="TiichModel.Tag">
               <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="activate" ColumnName="activate" />
                 <ScalarProperty Name="label" ColumnName="label" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

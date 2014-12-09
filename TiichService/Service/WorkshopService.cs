@@ -15,25 +15,36 @@ namespace TiichService.Service
     {
         public override void Add(Workshop obj, Utils.ErrorHandler eh, List<object> toAttach = null)
         {
+            AutoTag(obj);
+            //Traitement concernant uniquement le workshop
+            base.Add(obj, eh, toAttach);
+        }
+
+        public void AutoTag(Workshop obj)
+        {
+
             IRelevantWords extractor = new HomeMadeExtraction();
 
             //Prepare the texte 
-            char[] separator = new char[1] {' '};
+            char[] separator = new char[1] { ' ' };
             List<string> textToProcess = obj.Label.Split(separator).ToList();
 
-            if(!String.IsNullOrEmpty(obj.Details))
+            if (!String.IsNullOrEmpty(obj.Details))
                 textToProcess.AddRange(obj.Details.Split(separator).ToList());
-            
+
 
             //Word Extraction here
             //List<string> relevantText = (textToProcess);
-            List<string> relevantText = extractor.Extract(obj.Label.ToString() + " " + obj.Details.ToString());
-            
+            string text = obj.Label.ToString();
+            if (obj.Details != null)
+                text += " " + obj.Details.ToString();
+            List<string> relevantText = extractor.Extract(text);
+
 
             //Tagg the rest 
             ThesaurusAltervista th = new ThesaurusAltervista();
             List<Tag> tagList = new List<Tag>();
-            
+
             //Tag the relevant words
             foreach (string word in relevantText)
             {
@@ -42,6 +53,7 @@ namespace TiichService.Service
                 tagList.Add(tag);
             }
 
+            relevantText = RemoveDisabled(relevantText);
             //tag with thesaurus
             foreach (string tagLabel in th.GetTags(relevantText))
             {
@@ -51,8 +63,27 @@ namespace TiichService.Service
             }
             obj.Tag = tagList;
 
-            //Traitement concernant uniquement le workshop
-            base.Add(obj, eh, toAttach);
+        }
+
+        private List<string> RemoveDisabled(List<string> relevantText)
+        {
+            List<string> nList = new List<string>();
+            foreach (var item in relevantText)
+            {
+                Tag dbTag = ((WorkshopRepository)_repo).GetByLabel(item);
+                if(dbTag == null)
+                {
+                    nList.Add(item);
+                }
+                else
+                {
+                    if(dbTag.activate == 1)
+                    {
+                        nList.Add(item);
+                    }
+                }
+            }
+            return nList;
         }
 
         public WorkshopService()
@@ -113,6 +144,11 @@ namespace TiichService.Service
         public List<Workshop> GetFlopViewed(int p)
         {
             return ((WorkshopRepository)_repo).GetFlopViewed(p);
+        }
+
+        public void Update(Workshop w,List<Tag> tags)
+        {
+            ((WorkshopRepository)_repo).Update(w, tags);
         }
     }
 }

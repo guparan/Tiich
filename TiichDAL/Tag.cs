@@ -22,6 +22,7 @@ namespace TiichDAL
         public int ID { get; set; }
         public Nullable<int> parentId { get; set; }
         public string label { get; set; }
+        public int activate { get; set; }
     
         public virtual ICollection<Workshop> Workshop { get; set; }
     }

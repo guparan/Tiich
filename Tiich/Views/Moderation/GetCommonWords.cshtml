@@ -1,1 +1,47 @@
-﻿<h2>Words list </h2>
+﻿@model Tiich.ViewModels.VMTagManager
+
+@using (Html.BeginForm("UpdateActivatedTag", "Moderation", FormMethod.Post))
+{
+    int i = 0;
+    foreach(TiichDAL.Tag tag in Model.DirectTags)
+    {
+        <input name="@("direct" + i)" type="hidden" value="@tag.ID"/>
+        <label class="form-control">
+            @{
+                string ch = tag.activate == 1 ? "true" : "false";
+                string cheked = tag.activate == 1 ? "checked" : "";
+
+                <input type="checkbox" class="clickableCheckbox" @cheked title="@tag.label" value="@tag.label.Trim()" />
+                <input type="hidden" name="activate" id="activate" value="@ch"/>
+                i++;
+}
+            @tag.label.Trim()
+        </label>
+
+    }
+    i = 0;
+    foreach (TiichDAL.Tag tag in Model.IndirectTags)
+    {
+        <input type="hidden" name="@("indirect" + i)"  value="@tag.ID" />
+        i++;
+    }
+    <input type="submit" value="Enregistrer" id="recordChanges" class="btn btn-primary"/>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".clickableCheckbox").click(function (evt) {
+            var box = $(this);
+            $("#activate").val(box.prop("checked"));
+            //alert(box.prop("checked"));
+            /*$.ajax({
+                url: "UpdateActivatedTag?tag=" + $(this).val() + "&activate=" + box.prop("checked"),
+            })
+             .done(function (data) {
+                 location.reload();
+             });*/
+        })
+
+    });
+
+</script>

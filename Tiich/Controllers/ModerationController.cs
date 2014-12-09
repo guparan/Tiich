@@ -52,9 +52,55 @@ namespace Tiich.Controllers
 
         public ActionResult GetCommonWords(string tag)
         {
-            List<string> words = new List<string>();
+            TagService service = new TagService();
 
-            return View(words);
+            List<Tag>[] words = service.GetCommonWords(tag);
+
+            VMTagManager vm = new VMTagManager()
+            {
+                DirectTags = words[0],
+                IndirectTags = words[1]
+            };
+
+            return View(vm);
+        }
+
+        public ActionResult UpdateActivatedTag()
+        {
+            string direct = "direct";
+            string indirect = "indirect";
+            List<int> directIDS = new List<int>();
+            List<int> indirectIDS = new List<int>();
+
+            int i = 0;
+
+            while(Request.Params[direct + i] != null)
+            {
+                directIDS.Add(int.Parse(Request.Params[direct + i]));
+                i++;
+            }
+
+            i = 0;
+            while (Request.Params[indirect + i] != null)
+            {
+                indirectIDS.Add(int.Parse(Request.Params[indirect + i]));
+                i++;
+            }
+
+            bool activate = bool.Parse(Request.Params["activate"]);
+
+            List<int> tags = new List<int>();
+            tags.AddRange(directIDS);
+            tags.AddRange(indirectIDS);
+
+            TagService service = new TagService();
+            service.SetTags(directIDS, activate);
+            List<Workshop> works = service.GetWorkshopsFromTags(directIDS);
+            WorkshopService wService = new WorkshopService();
+            works.ForEach(w => wService.AutoTag(w));
+            works.ForEach(w => wService.Update(w, w.Tag.ToList()));
+
+            return Redirect("/Moderation/Index");
         }
     }
 }
