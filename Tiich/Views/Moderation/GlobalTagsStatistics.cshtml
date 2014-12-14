@@ -97,7 +97,7 @@
         var activePoints = window.myPie.getSegmentsAtEvent(evt);
         var tag = activePoints[0].label;
         $.ajax({
-            url: "GetCommonWords?tag=" + tag,
+            url: "/Moderation/GetCommonWords?tag=" + tag,
         })
              .done(function (data) {
                  $("#commonWords").html(data);

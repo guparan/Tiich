@@ -259,6 +259,7 @@ namespace TiichRepository.Repository
                 context.SaveChanges();
 
                 List<Tag> ts = new List<Tag>();
+                
                 foreach (Tag t in tags)
                 {
                     ts.Add(context.Tag.Where(ta => ta.label.Trim().ToLower().Equals(t.label.ToLower().Trim())).FirstOrDefault());

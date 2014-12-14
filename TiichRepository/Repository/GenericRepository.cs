@@ -87,10 +87,12 @@ namespace TiichRepository.Repository
 
                 if(taken != -1)
                 {
-                    query.Take(taken);
+                    return query.Take(taken).ToList();
                 }
-
-                return query.ToList();
+                else
+                {
+                    return query.ToList();
+                }
             }
         }
     }

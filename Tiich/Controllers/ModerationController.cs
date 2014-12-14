@@ -14,10 +14,10 @@ namespace Tiich.Controllers
     {
         //
         // GET: /Moderation/
-
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(List<int> ws = null)
         {
-            return View();
+            return View(ws);
         }
 
         public ActionResult PartialAjaxTest(string text)
@@ -65,7 +65,8 @@ namespace Tiich.Controllers
             return View(vm);
         }
 
-        public ActionResult UpdateActivatedTag()
+        [HttpPost]
+        public ActionResult Index()
         {
             string direct = "direct";
             string indirect = "indirect";
@@ -97,10 +98,43 @@ namespace Tiich.Controllers
             service.SetTags(directIDS, activate);
             List<Workshop> works = service.GetWorkshopsFromTags(directIDS);
             WorkshopService wService = new WorkshopService();
-            works.ForEach(w => wService.AutoTag(w));
-            works.ForEach(w => wService.Update(w, w.Tag.ToList()));
 
-            return Redirect("/Moderation/Index");
+            int wCount = works.Count;
+
+            List<int> ids = new List<int>();
+            works.ForEach(w => ids.Add(w.ID));
+
+            //works.ForEach(w => wService.AutoTag(w));
+            //works.ForEach(w => wService.Update(w, w.Tag.ToList()));
+
+
+            return Index(ids);
+        }
+    
+        public void UpdateWorkshop(int id)
+        {
+            WorkshopService service = new WorkshopService();
+
+            using (TiichEntities context = new TiichEntities())
+            {
+                Workshop w = context.Workshop.Include("Tag").First(ws => ws.ID == id);
+
+               service.AutoTag(w);
+               service.Update(w, w.Tag.ToList());
+            }
+        }
+
+        public void ReviewAll()
+        {
+            WorkshopService service = new WorkshopService();
+
+            using(TiichEntities context = new TiichEntities())
+            {
+                List<Workshop> ws = context.Workshop.Include("Tag").ToList();
+
+                ws.ForEach(w => service.AutoTag(w));
+                ws.ForEach(w => service.Update(w, w.Tag.ToList()));
+            }
         }
     }
 }

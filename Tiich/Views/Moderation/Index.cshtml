@@ -1,9 +1,15 @@
-﻿<div class="container-padded">
+﻿
+@model List<int>
+
+<div class="container-padded">
 
     <!-- Pie chart div -->
     <div id="pieChartDiv" class="col-lg-7 well">
         <div id="tagsStatistics">
             <img src="~/Content/Images/loader.gif" />
+        </div>
+        <div>
+            @Html.ActionLink("Tout appliquer", "ReviewAll",null, new {@class = "btn btn-primary btn-lg"});
         </div>
     </div>
 
@@ -22,24 +28,94 @@
     </div>
 
 </div>
+
+<div>
+    @if(Model != null)
+    {
+        int count = 1;
+        <input type="hidden" id="wCount" value="@Model.Count" />
+        foreach(int i in Model)
+        {
+            <input type="hidden" id="@("w"+ count)" value="@i" />
+            count++;
+        }
+        
+        <div class="modal fade in visible-lg  " id="progModal">
+            <div class="modal-dialog ">
+                <div class="modal-content ">
+                    <div class="modal-body" id="progressStatus">
+                        <div id="currentProcess"></div>
+                        /
+                        <div id="totalProcess"></div>
+                        <img src="~/Content/Images/loader.gif" />
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    }
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
+        var ajaxFunc = function (i) {
+            var id = parseInt($("#w" + i).val());
+            $.ajax({
+                url: "/Moderation/UpdateWorkshop?id=" + id,
+            })
+                            .complete(function () {
+                                if(isNaN(id))
+                                {
+                                    $("#progModal").remove();
+                                    //Call global stats
+                                    $.ajax({
+                                        url: "/Moderation/GlobalTagsStatistics",
+                                    })
+                                         .done(function (data) {
+                                             $("#tagsStatistics").html(data);
+                                         });
 
-        //Call global stats
-        $.ajax({
-                    url: "GlobalTagsStatistics",
-                })
-             .done(function (data) {
-                 $("#tagsStatistics").html(data);
-             });
+                                    //Call most and less viewed worksops
+                                    $.ajax({
+                                        url: "/Moderation/TopAndFlopWorkshops",
+                                    })
+                                         .done(function (data) {
+                                             $("#topAndFlopWorkshops").html(data);
+                                         });
 
-        //Call most and less viewed worksops
-        $.ajax({
-            url: "TopAndFlopWorkshops",
-        })
-             .done(function (data) {
-                 $("#topAndFlopWorkshops").html(data);
-             });
-    });
+                                }
+                                else {
+                                    $("#currentProcess").html(i);
+                                    i = i + 1;
+                                    ajaxFunc(i);
+                                }
+                            })
+                         .done(function (data) {
+                         });
+        }
+        if (count != null)
+        {
+            count = parseInt(count);
+            $("#totalProcess").html(count);
+            ajaxFunc(1);
+        }
+        else
+        {
+            //Call global stats
+            $.ajax({
+                url: "/Moderation/GlobalTagsStatistics",
+            })
+                 .done(function (data) {
+                     $("#tagsStatistics").html(data);
+                 });
+
+            //Call most and less viewed worksops
+            $.ajax({
+                url: "/Moderation/TopAndFlopWorkshops",
+            })
+                 .done(function (data) {
+                     $("#topAndFlopWorkshops").html(data);
+                 });
+
+        }
+  });
     //$("#ajax").load("/Moderation/PartialAjaxTest/?text=tets");
 </script>
