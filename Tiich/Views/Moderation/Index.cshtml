@@ -44,10 +44,11 @@
             <div class="modal-dialog ">
                 <div class="modal-content ">
                     <div class="modal-body" id="progressStatus">
-                        <div id="currentProcess"></div>
-                        /
-                        <div id="totalProcess"></div>
-                        <img src="~/Content/Images/loader.gif" />
+                        <div class="progress">
+                            <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width:0%;">
+                                0%
+                            </div>
+                        </div>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -56,6 +57,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        var count = $("#wCount").val();
         var ajaxFunc = function (i) {
             var id = parseInt($("#w" + i).val());
             $.ajax({
@@ -84,6 +86,10 @@
                                 }
                                 else {
                                     $("#currentProcess").html(i);
+                                    $("#progressBar").attr("aria-valuenow", i);
+                                    var percent = i / parseInt(count)* 100;
+                                    $("#progressBar").html(percent + "%");
+                                    $('#progressBar').css('width', percent + '%').attr('aria-valuenow', i);
                                     i = i + 1;
                                     ajaxFunc(i);
                                 }
@@ -94,6 +100,7 @@
         if (count != null)
         {
             count = parseInt(count);
+            $("#progressBar").attr("aria-valuemax", count);
             $("#totalProcess").html(count);
             ajaxFunc(1);
         }
