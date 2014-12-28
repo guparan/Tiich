@@ -49,6 +49,18 @@ function initialize() {
         browserSupportFlag = true;
         navigator.geolocation.getCurrentPosition(function (position) {
             initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            var oldLat = $("#oldLat").val();
+            var oldLng = $("#oldLng").val();
+
+            //alert(oldLat);
+            if (oldLat != "")
+            {
+                oldLat = oldLat.replace(",", ".");
+                oldLng = oldLng.replace(",", ".");
+                initialLocation = new google.maps.LatLng(oldLat, oldLng);
+
+            }
             map.setCenter(initialLocation);
         }, function () {
             handleNoGeolocation(browserSupportFlag);
@@ -60,7 +72,10 @@ function initialize() {
         handleNoGeolocation(browserSupportFlag);
     }
 
+    //Get old default bounds 
+
     map.fitBounds(defaultBounds);
+    map.setZoom(18);
 
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */(
@@ -107,7 +122,16 @@ function initialize() {
             bounds.extend(place.geometry.location);
 
             var coord = place.geometry.location;
-            $("#Location").val(coord);
+
+            var scoord = coord + "";
+            var lat = scoord.split(",")[0].substr(1, scoord.split(",")[0].length - 1);
+            var lng = scoord.split(",")[1].substr(0, scoord.split(",")[1].length - 2);
+            //alert($("#Location_Latitude") + coord.LatLng + lat + lng);
+
+            lat = lat.replace(".", ",");
+            lng = lng.replace(".", ",");
+            $("#Lat").val(lat);
+            $("#Lng").val(lng);
         }
 
         map.fitBounds(bounds);

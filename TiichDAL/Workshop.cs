@@ -27,13 +27,14 @@ namespace TiichDAL
         public Nullable<System.TimeSpan> Hour { get; set; }
         public int PeopleMin { get; set; }
         public int PeopleMax { get; set; }
-        public System.Data.Entity.Spatial.DbGeography Location { get; set; }
         public string Recurence { get; set; }
         public System.DateTime CreationDate { get; set; }
         public string Equipement { get; set; }
         public Nullable<int> UserID { get; set; }
         public string Address { get; set; }
         public string Details { get; set; }
+        public Nullable<double> Lat { get; set; }
+        public Nullable<double> Lng { get; set; }
     
         public virtual User User { get; set; }
         public virtual ICollection<Tag> Tag { get; set; }

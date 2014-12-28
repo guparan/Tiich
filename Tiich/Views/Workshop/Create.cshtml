@@ -2,7 +2,11 @@
 
 @{
     ViewBag.Title = "Proposer";
-    string x = TempData["UserID"].ToString();
+    string x = null;
+    if(TempData["UserID"] != null)
+    {
+        x = TempData["UserID"].ToString();
+    }
 
     bool edit = false;
     
@@ -29,8 +33,15 @@
             @Html.HiddenFor(m => m.CreationDate)
             @Html.HiddenFor(m => m.User)
             @Html.HiddenFor(m => m.UserID)
+            @Html.HiddenFor(m => m.Lat)
+            @Html.HiddenFor(m => m.Lng)
+    <input type="hidden" value="@Model.Lat" id="oldLat" />
+    <input type="hidden" value="@Model.Lng" id="oldLng" />
+
         }
-        @Html.HiddenFor(i => i.Location)
+        else
+        {
+        }
         <div class="col-lg-10 col-lg-offset-1">
             <div class="panel panel-group panel-custom">
                 <!-- Heading -->

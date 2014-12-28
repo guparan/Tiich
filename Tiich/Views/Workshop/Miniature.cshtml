@@ -1,8 +1,8 @@
 ﻿@model List<Tiich.ViewModels.VMWorkshop>
 
 @{
-    int index = 0;   
-    
+    int index = 0;
+    int totalWs = 0; ;
     foreach(var vm in Model)
     {
         if(vm.Workshops != null)
@@ -12,7 +12,7 @@
                 <div class="panel panel-group panel-custom">
                     <div class="panel-heading wraper" role="tab" id=@index >
                         <h3>
-                                @vm.Category<span class="badge" style="float:right">@vm.Workshops.Count</span>
+                                @vm.Category<span class="badge btn-lg" style="float:right">@vm.Workshops.Count</span>
                         </h3>
                     </div>
                      <ul class="list-group" id=@("content" + index)>
@@ -30,6 +30,12 @@
                                 <p>@ws.Details</p>
                                 <p>@ws.Address</p>
                                 <p>@ws.CreationDate</p>
+
+                                <h4 id="wsKm_@totalWs">
+
+                                </h4>
+                                <input type="hidden" id="wsLat_@totalWs" value="@ws.Lat"/>
+                                <input type="hidden" id="wsLng_@totalWs" value="@ws.Lng"/>
                             </div>
 
                             <!-- User-->
@@ -46,6 +52,7 @@
                             </div>
                         </li>
                                 i++;
+                                totalWs++;
                             }
                             }
                         </ul>
@@ -53,12 +60,12 @@
             }
         }
     index++;
+    <input type="hidden" id="totalWS" value="@totalWs" />
 }
 
 }
 
-
-
+    
 <script type="text/javascript">
     $(document).ready(function () {
         $(".clickableList").click(function (obj) {
@@ -72,4 +79,64 @@
             $("#content" + id).slideToggle(1000);
         })
     })
+
+    function distance(lat1, lon1, lat2, lon2, unit) {
+        //alert(lat1 + " " + lat2 + "// " + )
+        var radlat1 = Math.PI * lat1 / 180
+        var radlat2 = Math.PI * lat2 / 180
+        var radlon1 = Math.PI * lon1 / 180
+        var radlon2 = Math.PI * lon2 / 180
+        var theta = lon1 - lon2
+        var radtheta = Math.PI * theta / 180
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist)
+        dist = dist * 180 / Math.PI
+        dist = dist * 60 * 1.1515
+        if (unit == "K") { dist = dist * 1.609344 }
+        if (unit == "N") { dist = dist * 0.8684 }
+        return dist
+    }
+
+
+    function showMap(position) {
+        // Show a map centered at (position.coords.latitude, position.coords.longitude).
+
+        var myLat = position.coords.latitude;
+        var myLng = position.coords.longitude;
+
+        var latsuff = "wsLat_";
+        var lngsuff = "wsLng_";
+        var kmsuff = "wsKm_";
+        var i = 0;
+        var nbWs = parseInt($("#totalWS").val());
+
+        for (var i = 0; i <= nbWs ; i++) {
+            var lt = "#" + latsuff + i;
+            var lg = "#" + lngsuff + i;
+            var kms = "#" + kmsuff + i;
+            var localLat = $(lt).val();
+            var localLng = $(lg).val();
+
+            if (localLat != null)
+            {
+                localLat = localLat.replace(",", ".");
+                localLng = localLng.replace(",", ".");
+                localLat = parseFloat(localLat);
+                localLng = parseFloat(localLng);
+
+
+                var km = distance(myLat, myLng, localLat, localLng, "K");
+
+                if (!isNaN(km)) {
+                    km = Math.round(km, 2);
+                    var processedKm = km + " km";
+                    //processedKm = (myLat + " " + localLat + " " + myLng + " " + localLng);
+                    $(kms).html(processedKm);
+                }
+            }
+        }
+
+    }
+    // One-shot position request.
+    navigator.geolocation.getCurrentPosition(showMap);
 </script>

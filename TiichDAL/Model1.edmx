@@ -64,13 +64,14 @@
           <Property Name="Hour" Type="time" Precision="7" />
           <Property Name="PeopleMin" Type="int" Nullable="false" />
           <Property Name="PeopleMax" Type="int" Nullable="false" />
-          <Property Name="Location" Type="geography" />
           <Property Name="Recurence" Type="nchar" MaxLength="50" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="Equipement" Type="text" />
           <Property Name="UserID" Type="int" />
           <Property Name="Address" Type="text" />
           <Property Name="Details" Type="text" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lng" Type="float" />
         </EntityType>
         <EntityType Name="WorkshopTags">
           <Key>
@@ -276,7 +277,6 @@
           <Property Name="Hour" Type="Time" Precision="7" />
           <Property Name="PeopleMin" Type="Int32" Nullable="false" />
           <Property Name="PeopleMax" Type="Int32" Nullable="false" />
-          <Property Name="Location" Type="Geography" />
           <Property Name="Recurence" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Equipement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -287,6 +287,8 @@
           <NavigationProperty Name="Tag" Relationship="TiichModel.WorkshopTags" FromRole="Workshop" ToRole="Tag" />
           <NavigationProperty Name="WatchedBy" Relationship="TiichModel.SeenWorkshops" FromRole="Workshop" ToRole="User" />
           <NavigationProperty Name="Participants" Relationship="TiichModel.Participation1" FromRole="Workshop" ToRole="User" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Lng" Type="Double" />
         </EntityType>
         <Association Name="FK_Workshop_User">
           <End Type="TiichModel.User" Role="User" Multiplicity="0..1" />
@@ -373,13 +375,14 @@
           <EntitySetMapping Name="Workshop">
             <EntityTypeMapping TypeName="TiichModel.Workshop">
               <MappingFragment StoreEntitySet="Workshop">
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Equipement" ColumnName="Equipement" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Recurence" ColumnName="Recurence" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="PeopleMax" ColumnName="PeopleMax" />
                 <ScalarProperty Name="PeopleMin" ColumnName="PeopleMin" />
                 <ScalarProperty Name="Hour" ColumnName="Hour" />
