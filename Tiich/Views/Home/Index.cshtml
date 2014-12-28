@@ -22,7 +22,10 @@
                 @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
                 {
                     @Html.TextBox("research",TempData["research"] != null ? TempData["research"] : String.Empty,new { @class = "form-control", @placeholder = "Rechercher" })
-                    <input type="submit" class="btn btn-warning btn-lg" name="runSimulation" value="Go !" />
+                    
+                    <input type="hidden" class="localLat" name="Lat"/>
+    <input type="hidden" class="localLng" name="Lng" />
+                    <input type="submit" class="btn btn-warning btn-lg" value="Go !" />
                 }
 
             </div>
@@ -43,6 +46,9 @@
                 @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
                 {
                     @Html.TextBox("research", TempData["research"] != null ? TempData["research"] : String.Empty, new { @class = "form-control", @placeholder = "Rechercher" })
+
+    <input type="hidden" class="localLat" name="Lat" />
+    <input type="hidden" class="localLng" name="Lng" />
                     <input type="submit" class="btn btn-warning btn-lg" name="runSimulation" value="Go !" />
                 }
 
@@ -61,3 +67,14 @@
         </div>
 
 </div>
+<script>
+    function showMap(position) {
+        // Show a map centered at (position.coords.latitude, position.coords.longitude).
+        var myLat = position.coords.latitude;
+        var myLng = position.coords.longitude;
+        $(".localLat").val(myLat);
+        $(".localLng").val(myLng);
+    }
+    // One-shot position request.
+    navigator.geolocation.getCurrentPosition(showMap);
+</script>

@@ -16,6 +16,18 @@ namespace Tiich.Controllers
         [HttpPost]
         public ActionResult Index()
         {
+            float lat;
+            float lng;
+            try
+            {
+                lat = float.Parse(Request["Lat"].Replace(".",","));
+                lng = float.Parse(Request["Lng"].Replace(".", ","));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             VMSearchResultDisplay vm = new VMSearchResultDisplay();
             string research = Request["research"];
             
